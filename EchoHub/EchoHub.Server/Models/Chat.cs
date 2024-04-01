@@ -15,7 +15,7 @@ namespace EchoHub.Server.Models
         [ForeignKey("_Server")]
         public int ServerId {  get; set; }
 
-        public Server _Server { get; set; }
+        public HubServer _Server { get; set; }
 
 
     }

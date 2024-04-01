@@ -2,7 +2,7 @@
 
 namespace EchoHub.Server.Models
 {
-    public class Server
+    public class HubServer
     {
 
         [Key]

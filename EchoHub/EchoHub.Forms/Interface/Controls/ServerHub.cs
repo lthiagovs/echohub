@@ -24,8 +24,7 @@ namespace EchoHub.Forms.Interface.Controls
         {
             InitializeComponent();
 
-            this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 20, 20));
-
         }
+
     }
 }

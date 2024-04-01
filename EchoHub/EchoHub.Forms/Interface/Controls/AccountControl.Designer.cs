@@ -30,8 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountControl));
             panel1 = new Panel();
+            button1 = new Button();
             panel3 = new Panel();
             panel4 = new Panel();
+            btnChangeName = new Button();
             label2 = new Label();
             label1 = new Label();
             panel2 = new Panel();
@@ -60,8 +62,23 @@
             panel1.Size = new Size(824, 200);
             panel1.TabIndex = 0;
             // 
+            // button1
+            // 
+            button1.BackColor = Color.CornflowerBlue;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(6, 147);
+            button1.Name = "button1";
+            button1.Size = new Size(100, 30);
+            button1.TabIndex = 2;
+            button1.Text = "Foto";
+            button1.UseVisualStyleBackColor = false;
+            // 
             // panel3
             // 
+            panel3.Controls.Add(button1);
             panel3.Controls.Add(panel4);
             panel3.Location = new Point(190, 10);
             panel3.Name = "panel3";
@@ -70,6 +87,7 @@
             // 
             // panel4
             // 
+            panel4.Controls.Add(btnChangeName);
             panel4.Controls.Add(label2);
             panel4.Controls.Add(label1);
             panel4.Dock = DockStyle.Top;
@@ -77,6 +95,20 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(426, 60);
             panel4.TabIndex = 0;
+            // 
+            // btnChangeName
+            // 
+            btnChangeName.BackColor = Color.CornflowerBlue;
+            btnChangeName.FlatAppearance.BorderSize = 0;
+            btnChangeName.FlatStyle = FlatStyle.Flat;
+            btnChangeName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnChangeName.ForeColor = Color.White;
+            btnChangeName.Location = new Point(127, 0);
+            btnChangeName.Name = "btnChangeName";
+            btnChangeName.Size = new Size(100, 30);
+            btnChangeName.TabIndex = 1;
+            btnChangeName.Text = "Alterar";
+            btnChangeName.UseVisualStyleBackColor = false;
             // 
             // label2
             // 
@@ -181,5 +213,7 @@
         private Panel panel5;
         private Panel panel6;
         private Label label3;
+        private Button btnChangeName;
+        private Button button1;
     }
 }

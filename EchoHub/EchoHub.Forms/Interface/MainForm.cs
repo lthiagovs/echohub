@@ -51,7 +51,8 @@ namespace EchoHub.Forms.Interface
         private void pbLogo_Click(object sender, EventArgs e)
         {
 
-            addServer();
+            setContent(new AccountControl());
+
 
         }
     }

@@ -58,18 +58,18 @@
             // 
             pnContent.BackColor = Color.FromArgb(60, 60, 60);
             pnContent.Dock = DockStyle.Fill;
-            pnContent.Location = new Point(100, 40);
+            pnContent.Location = new Point(60, 40);
             pnContent.Name = "pnContent";
-            pnContent.Size = new Size(884, 451);
+            pnContent.Size = new Size(924, 451);
             pnContent.TabIndex = 3;
             // 
             // pnTop
             // 
             pnTop.BackColor = Color.FromArgb(45, 45, 45);
             pnTop.Dock = DockStyle.Top;
-            pnTop.Location = new Point(100, 0);
+            pnTop.Location = new Point(60, 0);
             pnTop.Name = "pnTop";
-            pnTop.Size = new Size(884, 40);
+            pnTop.Size = new Size(924, 40);
             pnTop.TabIndex = 2;
             // 
             // pnLeft
@@ -80,7 +80,7 @@
             pnLeft.Dock = DockStyle.Left;
             pnLeft.Location = new Point(0, 0);
             pnLeft.Name = "pnLeft";
-            pnLeft.Size = new Size(100, 491);
+            pnLeft.Size = new Size(60, 491);
             pnLeft.TabIndex = 0;
             // 
             // pnServers
@@ -90,7 +90,7 @@
             pnServers.Dock = DockStyle.Fill;
             pnServers.Location = new Point(0, 73);
             pnServers.Name = "pnServers";
-            pnServers.Size = new Size(100, 418);
+            pnServers.Size = new Size(60, 418);
             pnServers.TabIndex = 3;
             // 
             // panel1
@@ -100,14 +100,14 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(100, 73);
+            panel1.Size = new Size(60, 73);
             panel1.TabIndex = 2;
             // 
             // pbLogo
             // 
             pbLogo.BackgroundImage = (Image)resources.GetObject("pbLogo.BackgroundImage");
             pbLogo.BackgroundImageLayout = ImageLayout.Stretch;
-            pbLogo.Location = new Point(0, 3);
+            pbLogo.Location = new Point(8, 3);
             pbLogo.Name = "pbLogo";
             pbLogo.Size = new Size(40, 40);
             pbLogo.TabIndex = 0;
@@ -118,9 +118,9 @@
             // 
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(46, 3);
+            label1.Location = new Point(0, 46);
             label1.Name = "label1";
-            label1.Size = new Size(34, 40);
+            label1.Size = new Size(60, 24);
             label1.TabIndex = 1;
             label1.Text = "EchoHub";
             // 
