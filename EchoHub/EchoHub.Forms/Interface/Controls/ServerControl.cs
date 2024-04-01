@@ -20,6 +20,33 @@ namespace EchoHub.Forms.Interface.Controls
         );
         #endregion
 
+        private void addUser()
+        {
+
+            UserHub _userHub = new UserHub();
+            _userHub.Location = new Point(0,pnUser.Controls.Count*_userHub.Height);
+            pnUser.Controls.Add(_userHub);
+
+        }
+
+        private void addMessage()
+        {
+
+            MessageControl _messageControl = new MessageControl();
+            _messageControl.Location = new Point(0,pnMessages.Controls.Count*_messageControl.Height);
+            pnMessages.Controls.Add(_messageControl);
+
+        }
+
+        private void addChannel()
+        {
+
+            ChannelControl _channelControl = new ChannelControl();
+            _channelControl.Location = new Point(0, pnChannel.Controls.Count * _channelControl.Height+10);
+            pnChannel.Controls.Add(_channelControl);
+
+        }
+
         public ServerControl()
         {
 
@@ -32,6 +59,14 @@ namespace EchoHub.Forms.Interface.Controls
             this.btnPhone.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnPhone.Width, btnPhone.Height, _round, _round));
             //this.pnChat.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnChat.Width, pnChat.Height, _round, _round));
             //this.pnMessage.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnMessage.Width, pnMessage.Height, _round, _round));
+
+            //test
+            addUser();
+            addUser();
+            addMessage();
+            addMessage();
+            addChannel();
+            addChannel();
 
         }
     }

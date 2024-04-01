@@ -33,14 +33,14 @@
             pnContent = new Panel();
             pnTop = new Panel();
             pnLeft = new Panel();
-            panel1 = new Panel();
-            pictureBox1 = new PictureBox();
-            label1 = new Label();
             pnServers = new Panel();
+            panel1 = new Panel();
+            pbLogo = new PictureBox();
+            label1 = new Label();
             pnMain.SuspendLayout();
             pnLeft.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
             SuspendLayout();
             // 
             // pnMain
@@ -58,18 +58,18 @@
             // 
             pnContent.BackColor = Color.FromArgb(60, 60, 60);
             pnContent.Dock = DockStyle.Fill;
-            pnContent.Location = new Point(120, 40);
+            pnContent.Location = new Point(100, 40);
             pnContent.Name = "pnContent";
-            pnContent.Size = new Size(864, 451);
+            pnContent.Size = new Size(884, 451);
             pnContent.TabIndex = 3;
             // 
             // pnTop
             // 
             pnTop.BackColor = Color.FromArgb(45, 45, 45);
             pnTop.Dock = DockStyle.Top;
-            pnTop.Location = new Point(120, 0);
+            pnTop.Location = new Point(100, 0);
             pnTop.Name = "pnTop";
-            pnTop.Size = new Size(864, 40);
+            pnTop.Size = new Size(884, 40);
             pnTop.TabIndex = 2;
             // 
             // pnLeft
@@ -80,46 +80,49 @@
             pnLeft.Dock = DockStyle.Left;
             pnLeft.Location = new Point(0, 0);
             pnLeft.Name = "pnLeft";
-            pnLeft.Size = new Size(120, 491);
+            pnLeft.Size = new Size(100, 491);
             pnLeft.TabIndex = 0;
+            // 
+            // pnServers
+            // 
+            pnServers.AutoScroll = true;
+            pnServers.AutoScrollMinSize = new Size(20, 0);
+            pnServers.Dock = DockStyle.Fill;
+            pnServers.Location = new Point(0, 73);
+            pnServers.Name = "pnServers";
+            pnServers.Size = new Size(100, 418);
+            pnServers.TabIndex = 3;
             // 
             // panel1
             // 
-            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(pbLogo);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(120, 73);
+            panel1.Size = new Size(100, 73);
             panel1.TabIndex = 2;
             // 
-            // pictureBox1
+            // pbLogo
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(0, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(60, 60);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            pbLogo.BackgroundImage = (Image)resources.GetObject("pbLogo.BackgroundImage");
+            pbLogo.BackgroundImageLayout = ImageLayout.Stretch;
+            pbLogo.Location = new Point(0, 3);
+            pbLogo.Name = "pbLogo";
+            pbLogo.Size = new Size(40, 40);
+            pbLogo.TabIndex = 0;
+            pbLogo.TabStop = false;
+            pbLogo.Click += pbLogo_Click;
             // 
             // label1
             // 
-            label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(56, 0);
+            label1.Location = new Point(46, 3);
             label1.Name = "label1";
-            label1.Size = new Size(61, 64);
+            label1.Size = new Size(34, 40);
             label1.TabIndex = 1;
             label1.Text = "EchoHub";
-            // 
-            // pnServers
-            // 
-            pnServers.Dock = DockStyle.Fill;
-            pnServers.Location = new Point(0, 73);
-            pnServers.Name = "pnServers";
-            pnServers.Size = new Size(120, 418);
-            pnServers.TabIndex = 3;
             // 
             // MainForm
             // 
@@ -129,11 +132,12 @@
             Controls.Add(pnMain);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
             pnMain.ResumeLayout(false);
             pnLeft.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
             ResumeLayout(false);
         }
 
@@ -143,7 +147,7 @@
         private Panel pnLeft;
         private Panel pnTop;
         private Panel pnContent;
-        private PictureBox pictureBox1;
+        private PictureBox pbLogo;
         private Label label1;
         private Panel panel1;
         private Panel pnServers;

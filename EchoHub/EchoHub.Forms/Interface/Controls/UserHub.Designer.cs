@@ -1,6 +1,6 @@
 ﻿namespace EchoHub.Forms.Interface.Controls
 {
-    partial class ServerHub
+    partial class UserHub
     {
         /// <summary> 
         /// Variável de designer necessária.
@@ -28,67 +28,51 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerHub));
-            pnLogo = new Panel();
-            pictureBox1 = new PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserHub));
             label1 = new Label();
-            pnLogo.SuspendLayout();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // pnLogo
+            // label1
             // 
-            pnLogo.BackColor = Color.FromArgb(45, 45, 45);
-            pnLogo.Controls.Add(pictureBox1);
-            pnLogo.Dock = DockStyle.Top;
-            pnLogo.Location = new Point(0, 0);
-            pnLogo.Name = "pnLogo";
-            pnLogo.Padding = new Padding(10, 0, 10, 0);
-            pnLogo.Size = new Size(100, 80);
-            pnLogo.TabIndex = 0;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(72, 10);
+            label1.Name = "label1";
+            label1.Size = new Size(52, 17);
+            label1.TabIndex = 3;
+            label1.Text = "_name_";
             // 
             // pictureBox1
             // 
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Location = new Point(10, 0);
+            pictureBox1.Location = new Point(16, 10);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(80, 80);
-            pictureBox1.TabIndex = 0;
+            pictureBox1.Size = new Size(50, 50);
+            pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             // 
-            // label1
-            // 
-            label1.BackColor = Color.FromArgb(45, 45, 45);
-            label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 80);
-            label1.Name = "label1";
-            label1.Size = new Size(100, 17);
-            label1.TabIndex = 0;
-            label1.Text = "NAME";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // ServerHub
+            // UserHub
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(80, 80, 80);
+            BackColor = Color.FromArgb(55, 55, 55);
             Controls.Add(label1);
-            Controls.Add(pnLogo);
-            Name = "ServerHub";
-            Size = new Size(100, 97);
-            pnLogo.ResumeLayout(false);
+            Controls.Add(pictureBox1);
+            Name = "UserHub";
+            Padding = new Padding(10);
+            Size = new Size(170, 67);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-        private PictureBox pictureBox1;
+
         private Label label1;
-        public Panel pnLogo;
+        private PictureBox pictureBox1;
     }
 }

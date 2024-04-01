@@ -45,9 +45,9 @@
             btnMic = new PictureBox();
             label1 = new Label();
             pictureBox1 = new PictureBox();
-            panel3 = new Panel();
-            panel4 = new Panel();
-            panel5 = new Panel();
+            pnChannel = new Panel();
+            pnUser = new Panel();
+            pnMessages = new Panel();
             panel1.SuspendLayout();
             pnBottom.SuspendLayout();
             pnChat.SuspendLayout();
@@ -246,40 +246,40 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // panel3
+            // pnChannel
             // 
-            panel3.BackColor = Color.FromArgb(55, 55, 55);
-            panel3.Dock = DockStyle.Left;
-            panel3.Location = new Point(0, 0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(190, 381);
-            panel3.TabIndex = 1;
+            pnChannel.BackColor = Color.FromArgb(55, 55, 55);
+            pnChannel.Dock = DockStyle.Left;
+            pnChannel.Location = new Point(0, 0);
+            pnChannel.Name = "pnChannel";
+            pnChannel.Size = new Size(190, 381);
+            pnChannel.TabIndex = 1;
             // 
-            // panel4
+            // pnUser
             // 
-            panel4.BackColor = Color.FromArgb(55, 55, 55);
-            panel4.Dock = DockStyle.Right;
-            panel4.Location = new Point(694, 0);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(170, 381);
-            panel4.TabIndex = 2;
+            pnUser.BackColor = Color.FromArgb(55, 55, 55);
+            pnUser.Dock = DockStyle.Right;
+            pnUser.Location = new Point(694, 0);
+            pnUser.Name = "pnUser";
+            pnUser.Size = new Size(170, 381);
+            pnUser.TabIndex = 2;
             // 
-            // panel5
+            // pnMessages
             // 
-            panel5.Dock = DockStyle.Fill;
-            panel5.Location = new Point(190, 0);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(504, 381);
-            panel5.TabIndex = 3;
+            pnMessages.Dock = DockStyle.Fill;
+            pnMessages.Location = new Point(190, 0);
+            pnMessages.Name = "pnMessages";
+            pnMessages.Size = new Size(504, 381);
+            pnMessages.TabIndex = 3;
             // 
             // ServerControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(60, 60, 60);
-            Controls.Add(panel5);
-            Controls.Add(panel4);
-            Controls.Add(panel3);
+            Controls.Add(pnMessages);
+            Controls.Add(pnUser);
+            Controls.Add(pnChannel);
             Controls.Add(panel1);
             Name = "ServerControl";
             Size = new Size(864, 451);
@@ -307,9 +307,9 @@
         private Panel panel1;
         private Panel panel2;
         private PictureBox pictureBox1;
-        private Panel panel3;
-        private Panel panel4;
-        private Panel panel5;
+        private Panel pnChannel;
+        private Panel pnUser;
+        private Panel pnMessages;
         private Panel pnBottom;
         private Panel pnChat;
         private Panel panel8;
