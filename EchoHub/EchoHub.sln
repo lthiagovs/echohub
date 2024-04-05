@@ -3,9 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoHub.Forms", "EchoHub.Forms\EchoHub.Forms.csproj", "{69E5AFB0-2B9F-4255-AC64-97275FBF5A11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchoHub.Forms", "EchoHub.Forms\EchoHub.Forms.csproj", "{69E5AFB0-2B9F-4255-AC64-97275FBF5A11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoHub.Server", "EchoHub.Server\EchoHub.Server.csproj", "{DDF2552C-B678-40BB-830B-C056D3C3C345}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchoHub.Server", "EchoHub.Server\EchoHub.Server.csproj", "{DDF2552C-B678-40BB-830B-C056D3C3C345}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchoHub.Common", "EchoHub.Common\EchoHub.Common.csproj", "{37B259B1-1A56-4D73-9451-BF949169FD55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arquivos", "Arquivos", "{3565459F-F1B6-49CA-9AAD-C2FD558AE3F1}"
+	ProjectSection(SolutionItems) = preProject
+		Anotações.txt = Anotações.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +28,10 @@ Global
 		{DDF2552C-B678-40BB-830B-C056D3C3C345}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDF2552C-B678-40BB-830B-C056D3C3C345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDF2552C-B678-40BB-830B-C056D3C3C345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37B259B1-1A56-4D73-9451-BF949169FD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37B259B1-1A56-4D73-9451-BF949169FD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37B259B1-1A56-4D73-9451-BF949169FD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37B259B1-1A56-4D73-9451-BF949169FD55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

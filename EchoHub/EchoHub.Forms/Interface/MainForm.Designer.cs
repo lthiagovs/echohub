@@ -35,6 +35,7 @@
             pnLeft = new Panel();
             pnServers = new Panel();
             panel1 = new Panel();
+            label2 = new Label();
             pbLogo = new PictureBox();
             label1 = new Label();
             pnMain.SuspendLayout();
@@ -95,6 +96,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(label2);
             panel1.Controls.Add(pbLogo);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
@@ -103,11 +105,22 @@
             panel1.Size = new Size(60, 73);
             panel1.TabIndex = 2;
             // 
+            // label2
+            // 
+            label2.Font = new Font("Segoe UI", 6.25F);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(0, 51);
+            label2.Name = "label2";
+            label2.Size = new Size(60, 12);
+            label2.TabIndex = 2;
+            label2.Text = "Novo Servidor";
+            // 
             // pbLogo
             // 
             pbLogo.BackgroundImage = (Image)resources.GetObject("pbLogo.BackgroundImage");
             pbLogo.BackgroundImageLayout = ImageLayout.Stretch;
-            pbLogo.Location = new Point(8, 3);
+            pbLogo.Cursor = Cursors.Hand;
+            pbLogo.Location = new Point(10, 15);
             pbLogo.Name = "pbLogo";
             pbLogo.Size = new Size(40, 40);
             pbLogo.TabIndex = 0;
@@ -118,7 +131,7 @@
             // 
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 46);
+            label1.Location = new Point(0, 0);
             label1.Name = "label1";
             label1.Size = new Size(60, 24);
             label1.TabIndex = 1;
@@ -151,5 +164,6 @@
         private Label label1;
         private Panel panel1;
         private Panel pnServers;
+        private Label label2;
     }
 }

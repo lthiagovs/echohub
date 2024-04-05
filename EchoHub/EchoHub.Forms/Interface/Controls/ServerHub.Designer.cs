@@ -29,34 +29,35 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerHub));
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            btnServer = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)btnServer).BeginInit();
             SuspendLayout();
             // 
-            // pictureBox1
+            // btnServer
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(60, 60);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            btnServer.BackgroundImage = (Image)resources.GetObject("btnServer.BackgroundImage");
+            btnServer.BackgroundImageLayout = ImageLayout.Stretch;
+            btnServer.Cursor = Cursors.Hand;
+            btnServer.Location = new Point(0, 0);
+            btnServer.Name = "btnServer";
+            btnServer.Size = new Size(60, 60);
+            btnServer.TabIndex = 0;
+            btnServer.TabStop = false;
+            btnServer.Click += btnServer_Click;
             // 
             // ServerHub
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 45, 45);
-            Controls.Add(pictureBox1);
+            Controls.Add(btnServer);
             Name = "ServerHub";
             Size = new Size(60, 60);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnServer).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-        private PictureBox pictureBox1;
+        private PictureBox btnServer;
     }
 }

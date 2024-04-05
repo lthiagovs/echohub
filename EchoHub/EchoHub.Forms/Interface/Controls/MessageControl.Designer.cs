@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MessageControl));
-            label1 = new Label();
+            txtName = new Label();
             pictureBox1 = new PictureBox();
-            textBox1 = new TextBox();
+            txtContent = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // label1
+            // txtName
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(69, 4);
-            label1.Name = "label1";
-            label1.Size = new Size(52, 17);
-            label1.TabIndex = 5;
-            label1.Text = "_name_";
+            txtName.AutoSize = true;
+            txtName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtName.ForeColor = Color.White;
+            txtName.Location = new Point(69, 4);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(52, 17);
+            txtName.TabIndex = 5;
+            txtName.Text = "_name_";
             // 
             // pictureBox1
             // 
@@ -56,26 +56,26 @@
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
             // 
-            // textBox1
+            // txtContent
             // 
-            textBox1.BackColor = Color.FromArgb(60, 60, 60);
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.White;
-            textBox1.Location = new Point(69, 24);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(422, 30);
-            textBox1.TabIndex = 6;
-            textBox1.Text = "_MESSAGE_";
+            txtContent.BackColor = Color.FromArgb(60, 60, 60);
+            txtContent.BorderStyle = BorderStyle.None;
+            txtContent.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtContent.ForeColor = Color.White;
+            txtContent.Location = new Point(69, 24);
+            txtContent.Multiline = true;
+            txtContent.Name = "txtContent";
+            txtContent.Size = new Size(422, 30);
+            txtContent.TabIndex = 6;
+            txtContent.Text = "_MESSAGE_";
             // 
             // MessageControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(60, 60, 60);
-            Controls.Add(textBox1);
-            Controls.Add(label1);
+            Controls.Add(txtContent);
+            Controls.Add(txtName);
             Controls.Add(pictureBox1);
             Name = "MessageControl";
             Padding = new Padding(10);
@@ -86,9 +86,8 @@
         }
 
         #endregion
-
-        private Label label1;
         private PictureBox pictureBox1;
-        private TextBox textBox1;
+        public Label txtName;
+        public TextBox txtContent;
     }
 }

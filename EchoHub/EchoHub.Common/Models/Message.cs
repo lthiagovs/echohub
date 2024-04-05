@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EchoHub.Server.Models
+namespace EchoHub.Common.Models
 {
     public class Message
     {
@@ -15,9 +15,9 @@ namespace EchoHub.Server.Models
         public DateTime Date { get; set; }
 
         [ForeignKey("_Chat")]
-        public int ChatId {  get; set; }
+        public int ChatId { get; set; }
 
-        public Chat _Chat {  get; set; }
+        public Chat _Chat { get; set; } 
 
     }
 

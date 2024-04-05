@@ -12,9 +12,10 @@ namespace EchoHub.Forms.Interface.Controls
 {
     public partial class ChannelControl : UserControl
     {
-        public ChannelControl()
+        public ChannelControl(string Name)
         {
             InitializeComponent();
+            this.txtName.Text = Name;
         }
     }
 }

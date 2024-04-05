@@ -1,4 +1,5 @@
-﻿using EchoHub.Forms.Interface.Controls;
+﻿using EchoHub.Common.Models;
+using EchoHub.Forms.Interface.Controls;
 using System.Runtime.InteropServices;
 
 namespace EchoHub.Forms.Interface
@@ -21,38 +22,48 @@ namespace EchoHub.Forms.Interface
         );
         #endregion
 
-        private void addServer()
+        public User _logged;
+
+        public void addServer(int ServerId, string Name)
         {
 
-            ServerHub _serverHub = new ServerHub();
+            ServerHub _serverHub = new ServerHub(this, ServerId, Name);
             _serverHub.Location = new Point(0, (_serverHub.Height * pnServers.Controls.Count)+20);
             this.pnServers.Controls.Add(_serverHub);
 
         }
 
-        private void setContent(Control control)
+        public void setContent(Control control)
         {
             this.pnContent.Controls.Clear();
             control.Dock = DockStyle.Fill;
             this.pnContent.Controls.Add(control);
         }
 
-        public MainForm()
+        private void reloadServers()
+        {
+
+
+
+        }
+
+        public MainForm(User _user)
         {
             InitializeComponent();
-            this.setContent(new ServerControl());
+            this.setContent(new AccountControl());
+
+            _logged = _user;
 
 
             //test
-            addServer();
+            //addServer();
 
         }
 
         private void pbLogo_Click(object sender, EventArgs e)
         {
 
-            setContent(new AccountControl());
-
+            setContent(new NewServerControl(this));
 
         }
     }

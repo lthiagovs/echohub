@@ -1,0 +1,5 @@
+Hoje:
+
+Criar Servidor
+Criar Chat
+Enviar Mensagem

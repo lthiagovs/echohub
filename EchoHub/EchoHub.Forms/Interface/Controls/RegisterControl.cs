@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+﻿using EchoHub.Common;
+using EchoHub.Common.Models;
+using EchoHub.Forms.Core;
+using EchoHub.Forms.Interface.Dialogs;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EchoHub.Forms.Interface.Controls
 {
@@ -37,8 +32,41 @@ namespace EchoHub.Forms.Interface.Controls
             pnPassword.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnPassword.Width, pnPassword.Height, _round, _round));
             pnRepeatPassword.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnRepeatPassword.Width, pnRepeatPassword.Height, _round, _round));
             btnRegister.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnRegister.Width, btnRegister.Height, _round, _round));
-
         }
 
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+
+            if (txtPassword.Text.Equals(txtRepeatPassword.Text))
+            {
+
+
+                MessagePackage _send = new MessagePackage();
+                _send.Type = MessageType.CreateAccount;
+                _send.Informations = new List<string>();
+                //Add info
+                _send.Informations.Add(txtEmail.Text);
+                _send.Informations.Add(txtPassword.Text);
+                _send.Informations.Add(txtEmail.Text);
+
+                Client.Send(_send);
+
+                MessagePackage _receive = Client.Listen();
+
+                if (_receive.Type == MessageType.Positive)
+                {
+                    AdviceDialog _advice = new AdviceDialog("Conta criada com sucesso!");
+                    _advice.ShowDialog();
+                }
+                else
+                {
+                    AdviceDialog _advice = new AdviceDialog("Erro ao criar conta!");
+                    _advice.ShowDialog();
+                }
+
+
+            }
+
+        }
     }
 }

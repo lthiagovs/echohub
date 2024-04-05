@@ -6,6 +6,11 @@ namespace EchoHub.Forms.Interface.Controls
     {
 
         private int _round = 14;
+        private MainForm _target;
+
+        private int serverId;
+        private String Name;
+
         //Round Borders
         #region
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -20,11 +25,18 @@ namespace EchoHub.Forms.Interface.Controls
         );
         #endregion
 
-        public ServerHub()
+        public ServerHub(MainForm _target, int serverID, string Name)
         {
             InitializeComponent();
+            this._target = _target;
+            this.Name = Name;
+            this.serverId = serverID; 
 
         }
 
+        private void btnServer_Click(object sender, EventArgs e)
+        {
+            this._target.setContent(new ServerControl(this._target._logged));
+        }
     }
 }

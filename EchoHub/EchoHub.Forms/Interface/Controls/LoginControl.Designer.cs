@@ -29,29 +29,64 @@
         private void InitializeComponent()
         {
             pnEmail = new Panel();
+            txtEmail = new TextBox();
             pnPassword = new Panel();
+            txtPassword = new TextBox();
             btnLogin = new Button();
             label1 = new Label();
             label2 = new Label();
+            pnEmail.SuspendLayout();
+            pnPassword.SuspendLayout();
             SuspendLayout();
             // 
             // pnEmail
             // 
             pnEmail.BackColor = Color.FromArgb(50, 50, 50);
+            pnEmail.Controls.Add(txtEmail);
             pnEmail.Location = new Point(13, 50);
             pnEmail.Margin = new Padding(3, 3, 3, 10);
             pnEmail.Name = "pnEmail";
+            pnEmail.Padding = new Padding(4, 16, 4, 4);
             pnEmail.Size = new Size(598, 50);
             pnEmail.TabIndex = 1;
+            // 
+            // txtEmail
+            // 
+            txtEmail.BackColor = Color.FromArgb(50, 50, 50);
+            txtEmail.BorderStyle = BorderStyle.None;
+            txtEmail.Dock = DockStyle.Fill;
+            txtEmail.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtEmail.ForeColor = Color.White;
+            txtEmail.Location = new Point(4, 16);
+            txtEmail.MaxLength = 30;
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(590, 22);
+            txtEmail.TabIndex = 1;
             // 
             // pnPassword
             // 
             pnPassword.BackColor = Color.FromArgb(50, 50, 50);
+            pnPassword.Controls.Add(txtPassword);
             pnPassword.Location = new Point(13, 142);
             pnPassword.Margin = new Padding(3, 3, 3, 10);
             pnPassword.Name = "pnPassword";
+            pnPassword.Padding = new Padding(4, 16, 4, 4);
             pnPassword.Size = new Size(598, 50);
             pnPassword.TabIndex = 2;
+            // 
+            // txtPassword
+            // 
+            txtPassword.BackColor = Color.FromArgb(50, 50, 50);
+            txtPassword.BorderStyle = BorderStyle.None;
+            txtPassword.Dock = DockStyle.Fill;
+            txtPassword.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtPassword.ForeColor = Color.White;
+            txtPassword.Location = new Point(4, 16);
+            txtPassword.MaxLength = 12;
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(590, 22);
+            txtPassword.TabIndex = 2;
+            txtPassword.UseSystemPasswordChar = true;
             // 
             // btnLogin
             // 
@@ -104,6 +139,10 @@
             Name = "LoginControl";
             Padding = new Padding(10);
             Size = new Size(624, 314);
+            pnEmail.ResumeLayout(false);
+            pnEmail.PerformLayout();
+            pnPassword.ResumeLayout(false);
+            pnPassword.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -115,5 +154,7 @@
         private Button btnLogin;
         private Label label1;
         private Label label2;
+        private TextBox txtPassword;
+        private TextBox txtEmail;
     }
 }

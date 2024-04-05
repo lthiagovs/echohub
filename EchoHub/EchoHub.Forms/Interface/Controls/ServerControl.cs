@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using EchoHub.Common.Models;
+using System.Runtime.InteropServices;
 
 namespace EchoHub.Forms.Interface.Controls
 {
@@ -6,6 +7,7 @@ namespace EchoHub.Forms.Interface.Controls
     {
 
         private int _round = 8;
+        private User _user;
         //Round Borders
         #region
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -24,50 +26,63 @@ namespace EchoHub.Forms.Interface.Controls
         {
 
             UserHub _userHub = new UserHub();
-            _userHub.Location = new Point(0,pnUser.Controls.Count*_userHub.Height);
+            _userHub.Location = new Point(0, pnUser.Controls.Count * _userHub.Height);
             pnUser.Controls.Add(_userHub);
 
         }
 
-        private void addMessage()
+        private void addMessage(string User, string Content)
         {
 
             MessageControl _messageControl = new MessageControl();
-            _messageControl.Location = new Point(0,pnMessages.Controls.Count*_messageControl.Height);
+            _messageControl.txtContent.Text = Content;
+            _messageControl.txtName.Text = User;
+            _messageControl.Location = new Point(0, pnMessages.Controls.Count * _messageControl.Height);
             pnMessages.Controls.Add(_messageControl);
 
         }
 
-        private void addChannel()
+        private void addChannel(string Name)
         {
 
-            ChannelControl _channelControl = new ChannelControl();
-            _channelControl.Location = new Point(0, pnChannel.Controls.Count * _channelControl.Height+10);
+            ChannelControl _channelControl = new ChannelControl(Name);
+            _channelControl.Location = new Point(0, pnChannel.Controls.Count * _channelControl.Height);
             pnChannel.Controls.Add(_channelControl);
 
         }
 
-        public ServerControl()
+        public ServerControl(User _user)
         {
 
 
 
             InitializeComponent();
+            this._user = _user;
+            this.txtUserName.Text = _user.Name;
 
             this.btnConfig.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnConfig.Width, btnConfig.Height, _round, _round));
             this.btnMic.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnMic.Width, btnMic.Height, _round, _round));
             this.btnPhone.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnPhone.Width, btnPhone.Height, _round, _round));
-            //this.pnChat.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnChat.Width, pnChat.Height, _round, _round));
-            //this.pnMessage.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnMessage.Width, pnMessage.Height, _round, _round));
 
             //test
-            addUser();
-            addUser();
-            addMessage();
-            addMessage();
-            addChannel();
-            addChannel();
 
+
+
+
+        }
+
+        private void txtChat_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                addMessage(this._user.Name, txtChat.Text);
+                txtChat.Text = "";
+            }
+        }
+
+        private void btnNewChat_Click(object sender, EventArgs e)
+        {
+            addChannel("Novo Chat");
         }
     }
 }

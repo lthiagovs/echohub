@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChannelControl));
             pictureBox1 = new PictureBox();
-            label1 = new Label();
+            txtName = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -45,36 +45,35 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // label1
+            // txtName
             // 
-            label1.AutoSize = true;
-            label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(42, 2);
-            label1.Name = "label1";
-            label1.Size = new Size(65, 17);
-            label1.TabIndex = 2;
-            label1.Text = "_channel_";
+            txtName.Dock = DockStyle.Fill;
+            txtName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtName.ForeColor = Color.White;
+            txtName.Location = new Point(42, 2);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(146, 39);
+            txtName.TabIndex = 2;
+            txtName.Text = "_channel_";
+            txtName.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ChannelControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(55, 55, 55);
-            Controls.Add(label1);
+            Controls.Add(txtName);
             Controls.Add(pictureBox1);
             Name = "ChannelControl";
             Padding = new Padding(2);
             Size = new Size(190, 43);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private PictureBox pictureBox1;
-        private Label label1;
+        private Label txtName;
     }
 }

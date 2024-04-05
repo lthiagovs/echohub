@@ -33,7 +33,7 @@
             pnBottom = new Panel();
             pnChat = new Panel();
             pnMessage = new Panel();
-            textBox1 = new TextBox();
+            txtChat = new TextBox();
             panel9 = new Panel();
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
@@ -43,9 +43,12 @@
             btnConfig = new PictureBox();
             btnPhone = new PictureBox();
             btnMic = new PictureBox();
-            label1 = new Label();
+            txtUserName = new Label();
             pictureBox1 = new PictureBox();
+            pnLeft = new Panel();
             pnChannel = new Panel();
+            panel3 = new Panel();
+            btnNewChat = new Label();
             pnUser = new Panel();
             pnMessages = new Panel();
             panel1.SuspendLayout();
@@ -62,6 +65,8 @@
             ((System.ComponentModel.ISupportInitialize)btnPhone).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnMic).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pnLeft.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -100,7 +105,7 @@
             // pnMessage
             // 
             pnMessage.BackColor = Color.FromArgb(80, 80, 80);
-            pnMessage.Controls.Add(textBox1);
+            pnMessage.Controls.Add(txtChat);
             pnMessage.Dock = DockStyle.Fill;
             pnMessage.Location = new Point(58, 8);
             pnMessage.Name = "pnMessage";
@@ -108,18 +113,18 @@
             pnMessage.Size = new Size(498, 34);
             pnMessage.TabIndex = 2;
             // 
-            // textBox1
+            // txtChat
             // 
-            textBox1.BackColor = Color.FromArgb(80, 80, 80);
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.White;
-            textBox1.Location = new Point(8, 8);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(482, 18);
-            textBox1.TabIndex = 0;
+            txtChat.BackColor = Color.FromArgb(80, 80, 80);
+            txtChat.BorderStyle = BorderStyle.None;
+            txtChat.Dock = DockStyle.Fill;
+            txtChat.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtChat.ForeColor = Color.White;
+            txtChat.Location = new Point(8, 8);
+            txtChat.Name = "txtChat";
+            txtChat.Size = new Size(482, 22);
+            txtChat.TabIndex = 0;
+            txtChat.KeyPress += txtChat_KeyPress;
             // 
             // panel9
             // 
@@ -182,7 +187,7 @@
             panel2.Controls.Add(btnConfig);
             panel2.Controls.Add(btnPhone);
             panel2.Controls.Add(btnMic);
-            panel2.Controls.Add(label1);
+            panel2.Controls.Add(txtUserName);
             panel2.Controls.Add(pictureBox1);
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 0);
@@ -224,16 +229,16 @@
             btnMic.TabIndex = 2;
             btnMic.TabStop = false;
             // 
-            // label1
+            // txtUserName
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(66, 10);
-            label1.Name = "label1";
-            label1.Size = new Size(52, 17);
-            label1.TabIndex = 1;
-            label1.Text = "_name_";
+            txtUserName.AutoSize = true;
+            txtUserName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtUserName.ForeColor = Color.White;
+            txtUserName.Location = new Point(66, 10);
+            txtUserName.Name = "txtUserName";
+            txtUserName.Size = new Size(52, 17);
+            txtUserName.TabIndex = 1;
+            txtUserName.Text = "_name_";
             // 
             // pictureBox1
             // 
@@ -246,14 +251,46 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // pnLeft
+            // 
+            pnLeft.BackColor = Color.FromArgb(55, 55, 55);
+            pnLeft.Controls.Add(pnChannel);
+            pnLeft.Controls.Add(panel3);
+            pnLeft.Dock = DockStyle.Left;
+            pnLeft.Location = new Point(0, 0);
+            pnLeft.Name = "pnLeft";
+            pnLeft.Size = new Size(190, 381);
+            pnLeft.TabIndex = 1;
+            // 
             // pnChannel
             // 
-            pnChannel.BackColor = Color.FromArgb(55, 55, 55);
-            pnChannel.Dock = DockStyle.Left;
-            pnChannel.Location = new Point(0, 0);
+            pnChannel.Dock = DockStyle.Fill;
+            pnChannel.Location = new Point(0, 35);
             pnChannel.Name = "pnChannel";
-            pnChannel.Size = new Size(190, 381);
+            pnChannel.Size = new Size(190, 346);
             pnChannel.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(btnNewChat);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(190, 35);
+            panel3.TabIndex = 0;
+            // 
+            // btnNewChat
+            // 
+            btnNewChat.AutoSize = true;
+            btnNewChat.Cursor = Cursors.Hand;
+            btnNewChat.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            btnNewChat.ForeColor = Color.White;
+            btnNewChat.Location = new Point(10, 12);
+            btnNewChat.Name = "btnNewChat";
+            btnNewChat.Size = new Size(76, 19);
+            btnNewChat.TabIndex = 0;
+            btnNewChat.Text = "Novo Chat";
+            btnNewChat.Click += btnNewChat_Click;
             // 
             // pnUser
             // 
@@ -279,7 +316,7 @@
             BackColor = Color.FromArgb(60, 60, 60);
             Controls.Add(pnMessages);
             Controls.Add(pnUser);
-            Controls.Add(pnChannel);
+            Controls.Add(pnLeft);
             Controls.Add(panel1);
             Name = "ServerControl";
             Size = new Size(864, 451);
@@ -299,6 +336,9 @@
             ((System.ComponentModel.ISupportInitialize)btnPhone).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnMic).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            pnLeft.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -307,7 +347,7 @@
         private Panel panel1;
         private Panel panel2;
         private PictureBox pictureBox1;
-        private Panel pnChannel;
+        private Panel pnLeft;
         private Panel pnUser;
         private Panel pnMessages;
         private Panel pnBottom;
@@ -315,13 +355,16 @@
         private Panel panel8;
         private Panel panel9;
         private Panel pnMessage;
-        private TextBox textBox1;
-        private Label label1;
+        private TextBox txtChat;
+        private Label txtUserName;
         private PictureBox btnMic;
         private PictureBox btnConfig;
         private PictureBox btnPhone;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private PictureBox pictureBox4;
+        private Label btnNewChat;
+        private Panel pnChannel;
+        private Panel panel3;
     }
 }

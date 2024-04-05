@@ -1,4 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using EchoHub.Common;
+using EchoHub.Common.Models;
+using EchoHub.Forms.Core;
+using EchoHub.Forms.Interface.Dialogs;
+using System.Runtime.InteropServices;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace EchoHub.Forms.Interface.Controls
@@ -33,8 +37,32 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            MainForm _mainForm = new MainForm();
-            _mainForm.Show();
+
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.VerifyAccount;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(txtEmail.Text);
+            _send.Informations.Add(txtPassword.Text);
+
+            Client.Send(_send);
+            MessagePackage _receive = Client.Listen();
+
+            if(_receive.Type== MessageType.Positive)
+            {
+                User _user = new User();
+                _user.Email = txtEmail.Text;
+                _user.Password = txtPassword.Text;
+                _user.Name = txtEmail.Text;
+
+                MainForm _mainForm = new MainForm(_user);
+                _mainForm.Show();
+            }
+            else
+            {
+                AdviceDialog _dialog = new AdviceDialog("Credenciais incorretas!");
+                _dialog.ShowDialog();
+            }
+
         }
     }
 }

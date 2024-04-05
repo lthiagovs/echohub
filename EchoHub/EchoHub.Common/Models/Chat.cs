@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EchoHub.Server.Models
+namespace EchoHub.Common.Models
 {
     public class Chat
     {
@@ -13,7 +13,7 @@ namespace EchoHub.Server.Models
         public string Name { get; set; }
 
         [ForeignKey("_Server")]
-        public int ServerId {  get; set; }
+        public int ServerId { get; set; }
 
         public HubServer _Server { get; set; }
 

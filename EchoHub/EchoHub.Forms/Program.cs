@@ -1,3 +1,5 @@
+using EchoHub.Forms.Core;
+
 namespace EchoHub.Forms.Interface
 {
     internal static class Program
@@ -11,6 +13,7 @@ namespace EchoHub.Forms.Interface
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            Client.Start();
             Application.Run(new AccountForm());
         }
     }
