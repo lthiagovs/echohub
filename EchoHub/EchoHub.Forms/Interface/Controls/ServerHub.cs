@@ -36,7 +36,8 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnServer_Click(object sender, EventArgs e)
         {
-            this._target.setContent(new ServerControl(this._target._logged));
+            this._target.setContent(new ServerControl(this._target._logged,this._target,serverId));
+            this._target.txtServerName.Text = this.Name;
         }
     }
 }

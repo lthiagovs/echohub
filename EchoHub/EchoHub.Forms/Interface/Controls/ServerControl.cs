@@ -1,4 +1,10 @@
-﻿using EchoHub.Common.Models;
+﻿using EchoHub.Common;
+using EchoHub.Common.Models;
+using EchoHub.Forms.Core;
+using EchoHub.Forms.Interface.Dialogs;
+using Microsoft.VisualBasic;
+using System.ComponentModel.Design.Serialization;
+using System.Drawing.Design;
 using System.Runtime.InteropServices;
 
 namespace EchoHub.Forms.Interface.Controls
@@ -8,6 +14,8 @@ namespace EchoHub.Forms.Interface.Controls
 
         private int _round = 8;
         private User _user;
+        private MainForm _target;
+        private int _id;
         //Round Borders
         #region
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -42,23 +50,54 @@ namespace EchoHub.Forms.Interface.Controls
 
         }
 
-        private void addChannel(string Name)
+        private void addChannel(string Name, int Id)
         {
 
-            ChannelControl _channelControl = new ChannelControl(Name);
+            ChannelControl _channelControl = new ChannelControl(Name, Id);
             _channelControl.Location = new Point(0, pnChannel.Controls.Count * _channelControl.Height);
             pnChannel.Controls.Add(_channelControl);
 
         }
 
-        public ServerControl(User _user)
+        private void reloadChannels()
+        {
+
+            MessagePackage _send = new MessagePackage();
+            _send.Informations = new List<string>();
+            _send.Informations.Add(_id.ToString());
+            _send.Type = MessageType.GetChats;
+            Client.Send(_send);
+
+            MessagePackage _receive = Client.Listen();
+
+            if(_receive.Type == MessageType.Positive)
+            {
+
+                for(int i = 0;i<_receive.Informations.Count;i+=2)
+                {
+                    addChannel(_receive.Informations[1], Convert.ToInt32(_receive.Informations[0]));
+                }
+
+            }
+            else
+            {
+                AdviceDialog _advice = new AdviceDialog("Não foi possivel carregas os chats...");
+                _advice.ShowDialog();
+            }
+
+        }
+
+        public ServerControl(User _user, MainForm _target, int _id)
         {
 
 
 
             InitializeComponent();
             this._user = _user;
+            this._target = _target;
             this.txtUserName.Text = _user.Name;
+            this._id = _id;
+            this.reloadChannels();
 
             this.btnConfig.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnConfig.Width, btnConfig.Height, _round, _round));
             this.btnMic.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnMic.Width, btnMic.Height, _round, _round));
@@ -82,7 +121,32 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnNewChat_Click(object sender, EventArgs e)
         {
-            addChannel("Novo Chat");
+
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.CreateChat;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(_id.ToString());
+            _send.Informations.Add("Novo chat");
+
+            Client.Send(_send);
+
+            MessagePackage _received = Client.Listen();
+
+            if(_received.Type == MessageType.Positive)
+            {
+                addChannel("Novo chat", Convert.ToInt32(_received.Informations[0]));
+            }
+            else
+            {
+                AdviceDialog _advice = new AdviceDialog("Erro interno ao criar chat...");
+                _advice.ShowDialog();
+            }
+
+        }
+
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            this._target.setContent(new AccountControl(this._user));
         }
     }
 }

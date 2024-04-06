@@ -86,10 +86,19 @@ namespace EchoHub.Server.Core
                             Send.Type = createAccount(Message.Informations);
                             break;
                         case MessageType.VerifyAccount:
-                            Send.Type = verifyLogin(Message.Informations);
+                            Send = verifyLogin(Message.Informations);
                             break;
                         case MessageType.CreateServer:
                             Send = createServer(Message.Informations);
+                            break;
+                        case MessageType.GetServers:
+                            Send = getServers(Message.Informations);
+                            break;
+                        case MessageType.CreateChat:
+                            Send = createChat(Message.Informations);
+                            break;
+                        case MessageType.GetChats:
+                            Send = getChats(Message.Informations);
                             break;
 
                     }
@@ -111,6 +120,8 @@ namespace EchoHub.Server.Core
 
         }
 
+        //Operate functions
+        #region
         private static bool verifyUser(string Email, string Password)
         {
             bool result;
@@ -124,13 +135,32 @@ namespace EchoHub.Server.Core
             return result;
         }
        
-        private static MessageType verifyLogin(List<string> Informations)
+        private static MessagePackage verifyLogin(List<string> Informations)
         {
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+            try
+            {
 
-            if (verifyUser(Informations[0], Informations[1]))
-                return MessageType.Positive;
-            else
-                return MessageType.Negative;
+                if (verifyUser(Informations[0], Informations[1]))
+                {
+                    _retriev.Type = MessageType.Positive;
+                    using (DataContext _db = new DataContext())
+                    {
+                        _retriev.Informations.Add(_db.getUserID(Informations[0], Informations[1]).ToString());
+                    }
+                }
+                else
+                {
+                    _retriev.Type = MessageType.Negative;
+                }
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+            return _retriev;
 
         }
 
@@ -197,6 +227,106 @@ namespace EchoHub.Server.Core
 
         }
 
+        private static MessagePackage getServers(List<string> Informations) 
+        {
+
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+            List<HubServer> _servers;
+            try
+            {
+
+                using (DataContext _db = new DataContext())
+                {
+
+                    _servers = _db.getServers(Convert.ToInt32(Informations[0]));
+
+                    foreach(HubServer server in _servers)
+                    {
+                        _retriev.Informations.Add(server.Id.ToString());
+                        _retriev.Informations.Add(server.Name);
+                    }
+
+                    _retriev.Type = MessageType.Positive;
+                }
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+
+            return _retriev;
+
+        }
+            
+        private static MessagePackage createChat(List<string> Informations)
+        {
+
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+            try
+            {
+
+                using(DataContext _db = new DataContext())
+                {
+
+                    if(_db.createChat(Convert.ToInt32(Informations[0]), Informations[1]))
+                    {
+                        _retriev.Informations.Add(
+                            _db.Chats.ToList()[_db.Chats.Count() - 1].Id.ToString()
+                            );
+                        _retriev.Type = MessageType.Positive;
+                    }
+                    else
+                    {
+                        _retriev.Type = MessageType.Negative;
+                    }
+
+                }
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+            return _retriev;
+
+        }
+
+        private static MessagePackage getChats(List<string> Informations)
+        {
+
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+
+            try
+            {
+
+                using(DataContext _db = new DataContext())
+                {
+
+                    List<Chat> _chats = _db.getChats(Convert.ToInt32(Informations[0]));
+                    foreach(Chat chat in _chats)
+                    {
+                        _retriev.Informations.Add(chat.Id.ToString());
+                        _retriev.Informations.Add(chat.Name);
+
+                    }
+
+                }
+                _retriev.Type = MessageType.Positive;
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+
+
+            return _retriev;
+
+        }
+        #endregion
     }
 
 }

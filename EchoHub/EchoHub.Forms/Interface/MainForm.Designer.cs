@@ -38,7 +38,9 @@
             label2 = new Label();
             pbLogo = new PictureBox();
             label1 = new Label();
+            txtServerName = new Label();
             pnMain.SuspendLayout();
+            pnTop.SuspendLayout();
             pnLeft.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
@@ -67,6 +69,7 @@
             // pnTop
             // 
             pnTop.BackColor = Color.FromArgb(45, 45, 45);
+            pnTop.Controls.Add(txtServerName);
             pnTop.Dock = DockStyle.Top;
             pnTop.Location = new Point(60, 0);
             pnTop.Name = "pnTop";
@@ -137,6 +140,16 @@
             label1.TabIndex = 1;
             label1.Text = "EchoHub";
             // 
+            // txtServerName
+            // 
+            txtServerName.AutoSize = true;
+            txtServerName.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtServerName.ForeColor = Color.White;
+            txtServerName.Location = new Point(6, 12);
+            txtServerName.Name = "txtServerName";
+            txtServerName.Size = new Size(0, 25);
+            txtServerName.TabIndex = 0;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -148,6 +161,8 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
             pnMain.ResumeLayout(false);
+            pnTop.ResumeLayout(false);
+            pnTop.PerformLayout();
             pnLeft.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
@@ -165,5 +180,6 @@
         private Panel panel1;
         private Panel pnServers;
         private Label label2;
+        public Label txtServerName;
     }
 }

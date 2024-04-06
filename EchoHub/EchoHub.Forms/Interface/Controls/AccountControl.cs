@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using EchoHub.Common.Models;
 
 namespace EchoHub.Forms.Interface.Controls
 {
     public partial class AccountControl : UserControl
     {
-        public AccountControl()
+        private User _logged;
+        public AccountControl(User _user)
         {
             InitializeComponent();
+            _logged = _user;
+            txtEmail.Text = _user.Email;
+            txtName.Text = _user.Name;
+            txtPassword.Text = _user.Password;
+
         }
     }
 }

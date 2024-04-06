@@ -140,6 +140,80 @@ namespace EchoHub.Server.Database
 
         }
 
+        public int getUserID(string Email, string Password)
+        {
+
+            try
+            {
+                return this.Users.Single(
+                    x=>x.Email.Equals(Email)
+                    &&
+                    x.Password.Equals(Password)
+                    ).Id;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+
+        public bool createChat(int ServerID, string Name)
+        {
+
+            try
+            {
+
+                Chat _chat = new Chat();
+                _chat.Name = Name;
+                _chat.ServerId = ServerID;
+                _chat._Server = this.Servers.Single(x=>x.Id == ServerID);
+                this.Chats.Add(_chat);
+                this.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public List<Chat> getChats(int ServerID)
+        {
+
+            List<Chat> _chats = new List<Chat>();
+
+            _chats = this.Chats.Where(x => x.ServerId == ServerID).ToList();
+
+            return _chats;
+
+        }
+
+        public List<HubServer> getServers(int UserId)
+        {
+
+            List<HubServer> _servers = new List<HubServer>();
+            List<UserServer> _bounds = this.UserServer.Where(x=>x.UserId==UserId).ToList();
+            
+            foreach(UserServer bound in _bounds)
+            {
+                try
+                {
+                    _servers.Add(this.Servers.Single(x => x.Id == bound.ServerId));
+                }
+                catch
+                {
+
+                }
+
+            }
+
+            return _servers;
+
+        }
+
 
     }
 

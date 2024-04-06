@@ -206,6 +206,7 @@
             btnConfig.Size = new Size(30, 30);
             btnConfig.TabIndex = 4;
             btnConfig.TabStop = false;
+            btnConfig.Click += btnConfig_Click;
             // 
             // btnPhone
             // 

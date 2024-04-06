@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace EchoHub.Forms.Interface.Controls
+﻿namespace EchoHub.Forms.Interface.Controls
 {
     public partial class ChannelControl : UserControl
     {
-        public ChannelControl(string Name)
+        private int _id;
+        public ChannelControl(string Name, int _id)
         {
             InitializeComponent();
             this.txtName.Text = Name;
+            this._id = _id;
         }
     }
 }

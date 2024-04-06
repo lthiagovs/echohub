@@ -1,5 +1,8 @@
-﻿using EchoHub.Common.Models;
+﻿using EchoHub.Common;
+using EchoHub.Common.Models;
+using EchoHub.Forms.Core;
 using EchoHub.Forms.Interface.Controls;
+using EchoHub.Forms.Interface.Dialogs;
 using System.Runtime.InteropServices;
 
 namespace EchoHub.Forms.Interface
@@ -43,16 +46,39 @@ namespace EchoHub.Forms.Interface
         private void reloadServers()
         {
 
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.GetServers;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(_logged.Id.ToString());
 
+            Client.Send( _send );
+
+            MessagePackage _receive = Client.Listen();
+
+            if(_receive.Type==MessageType.Positive)
+            {
+
+                for(int i = 0;i<_receive.Informations.Count;i+=2)
+                {
+                    addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1]);
+                }
+
+            }
+            else
+            {
+                AdviceDialog _advice = new AdviceDialog("Erro ao carregar os servidores!");
+                _advice.ShowDialog();
+            }
 
         }
 
         public MainForm(User _user)
         {
             InitializeComponent();
-            this.setContent(new AccountControl());
+            this.setContent(new AccountControl(_user));
 
             _logged = _user;
+            reloadServers();
 
 
             //test

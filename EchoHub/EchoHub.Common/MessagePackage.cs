@@ -13,7 +13,7 @@
         GetChats,
         GetFriends,
         CreateServer,
-        CreateChat
+        CreateChat,
 
     }
 
