@@ -31,7 +31,7 @@ namespace EchoHub.Server.Core
 
         public static void Run()
         {
-            Console.WriteLine("NSM SERVER ONLINE!");
+            Console.WriteLine("ECHOHUB ONLINE!");
 
             Socket ClientSocket = default(Socket);
             int ClientCounter = 0;
@@ -99,6 +99,21 @@ namespace EchoHub.Server.Core
                             break;
                         case MessageType.GetChats:
                             Send = getChats(Message.Informations);
+                            break;
+                        case MessageType.CreateMessage:
+                            Send.Type = createMessage(Message.Informations);
+                            break;
+                        case MessageType.GetMessages:
+                            Send = getMessages(Message.Informations);
+                            break;
+                        case MessageType.GetFriend:
+                            Send = getFriend(Message.Informations);
+                            break;
+                        case MessageType.BoundUser:
+                            Send.Type = boundUser(Message.Informations);
+                            break;
+                        case MessageType.GetFriends:
+                            Send = getFriends(Message.Informations);
                             break;
 
                     }
@@ -326,6 +341,152 @@ namespace EchoHub.Server.Core
             return _retriev;
 
         }
+        
+        private static MessageType createMessage(List<string> Informations)
+        {
+
+            try
+            {
+
+                using(DataContext _db = new DataContext())
+                {
+
+                    if (_db.createMessage(Convert.ToInt32(Informations[0]), Informations[1]))
+                    {
+                        return MessageType.Positive;
+                    }
+                    else
+                    {
+                        return MessageType.Negative;
+                    }
+
+                }
+
+            }
+            catch
+            {
+                return MessageType.Wrong;
+            }
+
+        }
+        
+        private static MessagePackage getMessages(List<string> Informations)
+        {
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+            try
+            {
+                using(DataContext _db = new DataContext())
+                {
+
+                    List<Message> _messages = _db.getMessages(Convert.ToInt32(Informations[0]));
+                    foreach(Message message in _messages)
+                    {
+                        _retriev.Informations.Add(message.Content);
+                    }
+
+                }
+                _retriev.Type = MessageType.Positive;
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+
+            return _retriev;
+        }
+
+        private static MessagePackage getFriend(List<string> Informations)
+        {
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+
+            try
+            {
+
+                using(DataContext _db = new DataContext())
+                {
+                    User? _friend = _db.verifyFriend(Informations[0]);
+                    if (_friend!=null)
+                    {
+                        _retriev.Informations.Add(_friend.Id.ToString());
+                        _retriev.Informations.Add(_friend.Name);
+                        _retriev.Type = MessageType.Positive;
+                    }
+                    else
+                    {
+                        _retriev.Type = MessageType.Negative;
+                    }
+
+                }
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+
+
+            return _retriev;
+        }
+
+        private static MessageType boundUser(List<string> Informations)
+        {
+
+            try
+            {
+
+                using(DataContext _db = new DataContext())
+                {
+                    if (_db.newBound(Convert.ToInt32(Informations[0]),Convert.ToInt32(Informations[1])))
+                    {
+                        return MessageType.Positive;
+                    }
+                    return MessageType.Negative;
+                }
+
+            }
+            catch
+            {
+                return MessageType.Wrong;
+            }
+
+        }
+
+        private static MessagePackage getFriends(List<string> Informations)
+        {
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+
+            try
+            {
+
+                using(DataContext _db = new DataContext())
+                {
+
+                    List<User> _users = _db.getFriends(Convert.ToInt32(Informations[0]));
+
+                    foreach(User user in _users)
+                    {
+
+                        _retriev.Informations.Add(user.Id.ToString());
+                        _retriev.Informations.Add(user.Name);
+
+                    }
+
+                }
+                _retriev.Type = MessageType.Positive;
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+
+            return _retriev;
+        }
+
         #endregion
     }
 

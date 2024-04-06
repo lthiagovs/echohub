@@ -32,6 +32,19 @@ namespace EchoHub.Forms.Interface.Controls
             {
                 this._target.addServer(Convert.ToInt32(_receive.Informations[0]),txtServerName.Text);
                 this.txtServerName.Text = "";
+                _send = new MessagePackage();
+                _send.Type = MessageType.CreateChat;
+                _send.Informations = new List<string>();
+                _send.Informations.Add(_receive.Informations[0]);
+                _send.Informations.Add("Novo chat");
+                Client.Send(_send);
+
+                _receive = Client.Listen();
+                if(_receive.Type!=MessageType.Positive)
+                {
+                    AdviceDialog _advice = new AdviceDialog("Erro ao formar servidor.");
+                }
+
             }
             else
             {

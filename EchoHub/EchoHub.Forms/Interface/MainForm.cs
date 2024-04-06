@@ -31,7 +31,7 @@ namespace EchoHub.Forms.Interface
         {
 
             ServerHub _serverHub = new ServerHub(this, ServerId, Name);
-            _serverHub.Location = new Point(0, (_serverHub.Height * pnServers.Controls.Count)+20);
+            _serverHub.Location = new Point(0, (_serverHub.Height * pnServers.Controls.Count) + 20);
             this.pnServers.Controls.Add(_serverHub);
 
         }
@@ -45,20 +45,20 @@ namespace EchoHub.Forms.Interface
 
         private void reloadServers()
         {
-
+            pnServers.Controls.Clear();
             MessagePackage _send = new MessagePackage();
             _send.Type = MessageType.GetServers;
             _send.Informations = new List<string>();
             _send.Informations.Add(_logged.Id.ToString());
 
-            Client.Send( _send );
+            Client.Send(_send);
 
             MessagePackage _receive = Client.Listen();
 
-            if(_receive.Type==MessageType.Positive)
+            if (_receive.Type == MessageType.Positive)
             {
 
-                for(int i = 0;i<_receive.Informations.Count;i+=2)
+                for (int i = 0; i < _receive.Informations.Count; i += 2)
                 {
                     addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1]);
                 }
@@ -72,6 +72,33 @@ namespace EchoHub.Forms.Interface
 
         }
 
+        private void updateServersRealTime()
+        {
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.GetServers;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(_logged.Id.ToString());
+
+            Client.Send(_send);
+
+            MessagePackage _receive = Client.Listen();
+
+            if (_receive.Type == MessageType.Positive)
+            {
+
+                if (pnServers.Controls.Count != _receive.Informations.Count / 2)
+                {
+                    pnServers.Controls.Clear();
+                    for (int i = 0; i < _receive.Informations.Count; i += 2)
+                    {
+                        addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1]);
+                    }
+                }
+
+            }
+
+        }
+
         public MainForm(User _user)
         {
             InitializeComponent();
@@ -79,6 +106,7 @@ namespace EchoHub.Forms.Interface
 
             _logged = _user;
             reloadServers();
+            updateServers.Start();
 
 
             //test
@@ -91,6 +119,11 @@ namespace EchoHub.Forms.Interface
 
             setContent(new NewServerControl(this));
 
+        }
+
+        private void updateServers_Tick(object sender, EventArgs e)
+        {
+            //this.updateServersRealTime();
         }
     }
 }

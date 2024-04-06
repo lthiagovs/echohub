@@ -128,7 +128,7 @@
         QWjc4/oFwuN8cN5Bw/E+mT9CEDwAoy/Vf1mVQQ8AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="pictureBox3.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnGif.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAKZJREFUSEvt
         1cENwjAAQ9GcmItjt2IGYAVGYKIySHCiHxRkLmB665Mstbh1pR5o2X2l1rooD+VX7d6FOady7ZdlVuYc
@@ -4538,4 +4538,7 @@
         P7yFB9j6r6otAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="titleTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

@@ -23,10 +23,18 @@ namespace EchoHub.Forms.Core
 
         public static MessagePackage Listen()
         {
-            byte[] MsgFromServer = new byte[1000000];
-            int size = Client.ClientSocket.Receive(MsgFromServer);
-            string json = (Encoding.ASCII.GetString(MsgFromServer, 0, size));
-            return JsonSerializer.Deserialize<MessagePackage>(json);
+            try
+            {
+                byte[] MsgFromServer = new byte[1000000];
+                int size = Client.ClientSocket.Receive(MsgFromServer);
+                string json = (Encoding.ASCII.GetString(MsgFromServer, 0, size));
+                return JsonSerializer.Deserialize<MessagePackage>(json);
+            }
+            catch
+            {
+                return new MessagePackage();
+            }
+
         }
 
         public static void Send(MessagePackage Message)

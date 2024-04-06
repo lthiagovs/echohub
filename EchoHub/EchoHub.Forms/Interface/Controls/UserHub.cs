@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace EchoHub.Forms.Interface.Controls
+﻿namespace EchoHub.Forms.Interface.Controls
 {
     public partial class UserHub : UserControl
     {
-        public UserHub()
+
+        public int _id;
+        public string _name;
+
+        public UserHub(int id, string name)
         {
             InitializeComponent();
+            _id = id;
+            _name = name;
+            this.txtName.Text = name;
         }
     }
 }

@@ -46,17 +46,32 @@ namespace EchoHub.Server.Database
 
         }
 
-        public bool verifyUser(string Name)
+        public bool verifyUser(string Email)
         {
 
             try
             {
-                this.Users.Single(x => x.Name.Equals(Name));
+                this.Users.Single(x => x.Email.Equals(Email));
                 return true;
             }
             catch
             {
                 return false;
+            }
+
+        }
+
+        public User? verifyFriend(string Email)
+        {
+
+            try
+            {
+                return Users.Single(x => x.Email.Equals(Email));
+
+            }
+            catch
+            {
+                return null;
             }
 
         }
@@ -95,11 +110,30 @@ namespace EchoHub.Server.Database
 
         }
 
+        private bool isBound(int serverID, int userID)
+        {
+
+            try
+            {
+                UserServer _test = this.UserServer.Single(x => x.UserId == userID && x.ServerId == serverID); 
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
         public bool boundServer(HubServer _server, User _user)
         {
 
             try
             {
+                if (isBound(_server.Id, _user.Id))
+                {
+                    return false;
+                }
                 UserServer _bound = new UserServer();
                 _bound._Server = _server;
                 _bound._User = _user;
@@ -109,6 +143,24 @@ namespace EchoHub.Server.Database
                 return true;
             }
             catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool newBound(int UserID, int ServerID)
+        {
+            if(!isBound(ServerID, UserID))
+            {
+                UserServer _bound = new UserServer();
+                _bound.ServerId = ServerID;
+                _bound.UserId = UserID; 
+                this.UserServer.Add(_bound);
+                this.SaveChanges();
+                return true;
+            }
+            else
             {
                 return false;
             }
@@ -214,6 +266,55 @@ namespace EchoHub.Server.Database
 
         }
 
+        public bool createMessage(int ChatId, string Content)
+        {
+            try
+            {
+
+                Message _message = new Message();
+                _message.ChatId = ChatId;
+                _message.Content = Content;
+                this.Messages.Add(_message);
+                this.SaveChanges();
+                return true;
+            }
+            catch
+            {
+
+                return false;
+
+            }
+        }
+
+        public List<Message> getMessages(int ChatId)
+        {
+            List<Message> _messages = new List<Message>();
+
+            _messages = this.Messages.Where(x => x.ChatId == ChatId).ToList();
+
+            return _messages;
+        }
+
+        public List<User> getFriends(int ServerId)
+        {
+            List<User> _users = new List<User>();
+            List<UserServer> _bounds = this.UserServer.Where(x => x.ServerId == ServerId).ToList();
+
+            foreach (UserServer bound in _bounds)
+            {
+                try
+                {
+                    _users.Add(this.Users.Single(x => x.Id == bound.UserId));
+                }
+                catch
+                {
+
+                }
+
+            }
+
+            return _users;
+        }
 
     }
 

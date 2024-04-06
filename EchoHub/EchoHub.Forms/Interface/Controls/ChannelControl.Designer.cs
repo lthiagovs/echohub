@@ -47,6 +47,7 @@
             // 
             // txtName
             // 
+            txtName.Cursor = Cursors.Hand;
             txtName.Dock = DockStyle.Fill;
             txtName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtName.ForeColor = Color.White;
@@ -56,6 +57,7 @@
             txtName.TabIndex = 2;
             txtName.Text = "_channel_";
             txtName.TextAlign = ContentAlignment.MiddleCenter;
+            txtName.Click += txtName_Click;
             // 
             // ChannelControl
             // 
@@ -74,6 +76,6 @@
         #endregion
 
         private PictureBox pictureBox1;
-        private Label txtName;
+        public Label txtName;
     }
 }

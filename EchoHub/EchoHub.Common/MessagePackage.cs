@@ -11,9 +11,13 @@
         VerifyAccount,
         GetServers,
         GetChats,
+        GetMessages,
         GetFriends,
         CreateServer,
         CreateChat,
+        CreateMessage,
+        GetFriend,
+        BoundUser
 
     }
 
