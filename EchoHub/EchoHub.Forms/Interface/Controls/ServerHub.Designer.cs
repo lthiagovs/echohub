@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerHub));
             btnServer = new PictureBox();
+            pnBack = new Panel();
             ((System.ComponentModel.ISupportInitialize)btnServer).BeginInit();
             SuspendLayout();
             // 
@@ -38,12 +39,23 @@
             btnServer.BackgroundImage = (Image)resources.GetObject("btnServer.BackgroundImage");
             btnServer.BackgroundImageLayout = ImageLayout.Stretch;
             btnServer.Cursor = Cursors.Hand;
+            btnServer.Dock = DockStyle.Fill;
             btnServer.Location = new Point(0, 0);
             btnServer.Name = "btnServer";
             btnServer.Size = new Size(60, 60);
             btnServer.TabIndex = 0;
             btnServer.TabStop = false;
             btnServer.Click += btnServer_Click;
+            btnServer.MouseEnter += btnServer_MouseEnter;
+            btnServer.MouseLeave += btnServer_MouseLeave;
+            // 
+            // pnBack
+            // 
+            pnBack.Dock = DockStyle.Fill;
+            pnBack.Location = new Point(0, 0);
+            pnBack.Name = "pnBack";
+            pnBack.Size = new Size(60, 60);
+            pnBack.TabIndex = 1;
             // 
             // ServerHub
             // 
@@ -51,6 +63,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 45, 45);
             Controls.Add(btnServer);
+            Controls.Add(pnBack);
             Name = "ServerHub";
             Size = new Size(60, 60);
             ((System.ComponentModel.ISupportInitialize)btnServer).EndInit();
@@ -59,5 +72,6 @@
 
         #endregion
         private PictureBox btnServer;
+        private Panel pnBack;
     }
 }

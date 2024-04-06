@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountControl));
             panel1 = new Panel();
+            btnChangePhoto = new PictureBox();
             panel2 = new Panel();
-            button2 = new Button();
-            button1 = new Button();
+            btnChangePassword = new Button();
             panel6 = new Panel();
             label5 = new Label();
             txtPassword = new Label();
@@ -42,25 +42,27 @@
             panel3 = new Panel();
             label4 = new Label();
             txtName = new Label();
-            btnLogin = new Button();
-            pictureBox1 = new PictureBox();
+            btnChangeName = new Button();
+            pbUser = new PictureBox();
             panel5 = new Panel();
             button4 = new Button();
             button3 = new Button();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)btnChangePhoto).BeginInit();
             panel2.SuspendLayout();
             panel6.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             panel5.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(55, 55, 55);
+            panel1.Controls.Add(btnChangePhoto);
             panel1.Controls.Add(panel2);
-            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(pbUser);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(30, 20);
             panel1.Name = "panel1";
@@ -68,52 +70,50 @@
             panel1.Size = new Size(804, 200);
             panel1.TabIndex = 0;
             // 
+            // btnChangePhoto
+            // 
+            btnChangePhoto.BackgroundImage = (Image)resources.GetObject("btnChangePhoto.BackgroundImage");
+            btnChangePhoto.BackgroundImageLayout = ImageLayout.Stretch;
+            btnChangePhoto.Cursor = Cursors.Hand;
+            btnChangePhoto.Location = new Point(140, 140);
+            btnChangePhoto.Name = "btnChangePhoto";
+            btnChangePhoto.Size = new Size(40, 40);
+            btnChangePhoto.TabIndex = 2;
+            btnChangePhoto.TabStop = false;
+            btnChangePhoto.Click += btnChangePhoto_Click;
+            btnChangePhoto.MouseEnter += btnChangePhoto_MouseEnter;
+            btnChangePhoto.MouseLeave += btnChangePhoto_MouseLeave;
+            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(50, 50, 50);
-            panel2.Controls.Add(button2);
-            panel2.Controls.Add(button1);
+            panel2.Controls.Add(btnChangePassword);
             panel2.Controls.Add(panel6);
             panel2.Controls.Add(panel4);
             panel2.Controls.Add(panel3);
-            panel2.Controls.Add(btnLogin);
+            panel2.Controls.Add(btnChangeName);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(180, 20);
             panel2.Name = "panel2";
             panel2.Size = new Size(604, 160);
             panel2.TabIndex = 1;
             // 
-            // button2
+            // btnChangePassword
             // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button2.BackColor = Color.FromArgb(45, 45, 45);
-            button2.Cursor = Cursors.Hand;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(510, 107);
-            button2.Name = "button2";
-            button2.Size = new Size(84, 32);
-            button2.TabIndex = 12;
-            button2.Text = "Alterar";
-            button2.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button1.BackColor = Color.FromArgb(45, 45, 45);
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(510, 55);
-            button1.Name = "button1";
-            button1.Size = new Size(84, 32);
-            button1.TabIndex = 11;
-            button1.Text = "Alterar";
-            button1.UseVisualStyleBackColor = false;
+            btnChangePassword.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnChangePassword.BackColor = Color.FromArgb(45, 45, 45);
+            btnChangePassword.Cursor = Cursors.Hand;
+            btnChangePassword.FlatAppearance.BorderSize = 0;
+            btnChangePassword.FlatStyle = FlatStyle.Flat;
+            btnChangePassword.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnChangePassword.ForeColor = Color.White;
+            btnChangePassword.Location = new Point(510, 107);
+            btnChangePassword.Name = "btnChangePassword";
+            btnChangePassword.Size = new Size(84, 32);
+            btnChangePassword.TabIndex = 12;
+            btnChangePassword.Text = "Alterar";
+            btnChangePassword.UseVisualStyleBackColor = false;
+            btnChangePassword.Click += btnChangePassword_Click;
             // 
             // panel6
             // 
@@ -152,7 +152,7 @@
             // 
             panel4.Controls.Add(label2);
             panel4.Controls.Add(txtEmail);
-            panel4.Location = new Point(6, 50);
+            panel4.Location = new Point(6, 8);
             panel4.Name = "panel4";
             panel4.Size = new Size(254, 40);
             panel4.TabIndex = 1;
@@ -185,7 +185,7 @@
             // 
             panel3.Controls.Add(label4);
             panel3.Controls.Add(txtName);
-            panel3.Location = new Point(6, 3);
+            panel3.Location = new Point(6, 56);
             panel3.Name = "panel3";
             panel3.Size = new Size(254, 40);
             panel3.TabIndex = 0;
@@ -214,33 +214,34 @@
             txtName.TabIndex = 4;
             txtName.Text = "_nome_";
             // 
-            // btnLogin
+            // btnChangeName
             // 
-            btnLogin.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnLogin.BackColor = Color.FromArgb(45, 45, 45);
-            btnLogin.Cursor = Cursors.Hand;
-            btnLogin.FlatAppearance.BorderSize = 0;
-            btnLogin.FlatStyle = FlatStyle.Flat;
-            btnLogin.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(510, 8);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(84, 32);
-            btnLogin.TabIndex = 7;
-            btnLogin.Text = "Alterar";
-            btnLogin.UseVisualStyleBackColor = false;
+            btnChangeName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnChangeName.BackColor = Color.FromArgb(45, 45, 45);
+            btnChangeName.Cursor = Cursors.Hand;
+            btnChangeName.FlatAppearance.BorderSize = 0;
+            btnChangeName.FlatStyle = FlatStyle.Flat;
+            btnChangeName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnChangeName.ForeColor = Color.White;
+            btnChangeName.Location = new Point(510, 56);
+            btnChangeName.Name = "btnChangeName";
+            btnChangeName.Size = new Size(84, 32);
+            btnChangeName.TabIndex = 7;
+            btnChangeName.Text = "Alterar";
+            btnChangeName.UseVisualStyleBackColor = false;
+            btnChangeName.Click += btnChangeName_Click;
             // 
-            // pictureBox1
+            // pbUser
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Dock = DockStyle.Left;
-            pictureBox1.Location = new Point(20, 20);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(160, 160);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
+            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
+            pbUser.BorderStyle = BorderStyle.FixedSingle;
+            pbUser.Dock = DockStyle.Left;
+            pbUser.Location = new Point(20, 20);
+            pbUser.Name = "pbUser";
+            pbUser.Size = new Size(160, 160);
+            pbUser.TabIndex = 0;
+            pbUser.TabStop = false;
             // 
             // panel5
             // 
@@ -296,6 +297,7 @@
             Padding = new Padding(30, 20, 30, 20);
             Size = new Size(864, 451);
             panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)btnChangePhoto).EndInit();
             panel2.ResumeLayout(false);
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
@@ -303,7 +305,7 @@
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -311,11 +313,11 @@
         #endregion
 
         private Panel panel1;
-        private PictureBox pictureBox1;
+        private PictureBox pbUser;
         private Panel panel5;
         private Panel panel2;
         private Label txtName;
-        private Button btnLogin;
+        private Button btnChangeName;
         private Panel panel6;
         private Label label5;
         private Label txtPassword;
@@ -324,9 +326,9 @@
         private Label txtEmail;
         private Panel panel3;
         private Label label4;
-        private Button button2;
-        private Button button1;
+        private Button btnChangePassword;
         private Button button4;
         private Button button3;
+        private PictureBox btnChangePhoto;
     }
 }

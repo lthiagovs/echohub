@@ -45,7 +45,7 @@
             btnPhone = new PictureBox();
             btnMic = new PictureBox();
             txtUserName = new Label();
-            pictureBox1 = new PictureBox();
+            pbUser = new PictureBox();
             pnLeft = new Panel();
             pnChannel = new Panel();
             pnTitle = new Panel();
@@ -71,7 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)btnConfig).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnPhone).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnMic).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             pnLeft.SuspendLayout();
             pnTitle.SuspendLayout();
             panel4.SuspendLayout();
@@ -198,7 +198,7 @@
             panel2.Controls.Add(btnPhone);
             panel2.Controls.Add(btnMic);
             panel2.Controls.Add(txtUserName);
-            panel2.Controls.Add(pictureBox1);
+            panel2.Controls.Add(pbUser);
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
@@ -251,16 +251,16 @@
             txtUserName.TabIndex = 1;
             txtUserName.Text = "_name_";
             // 
-            // pictureBox1
+            // pbUser
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Dock = DockStyle.Left;
-            pictureBox1.Location = new Point(10, 10);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(50, 50);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
+            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
+            pbUser.Dock = DockStyle.Left;
+            pbUser.Location = new Point(10, 10);
+            pbUser.Name = "pbUser";
+            pbUser.Size = new Size(50, 50);
+            pbUser.TabIndex = 0;
+            pbUser.TabStop = false;
             // 
             // pnLeft
             // 
@@ -277,9 +277,9 @@
             // 
             pnChannel.AutoScroll = true;
             pnChannel.Dock = DockStyle.Fill;
-            pnChannel.Location = new Point(0, 35);
+            pnChannel.Location = new Point(0, 40);
             pnChannel.Name = "pnChannel";
-            pnChannel.Size = new Size(190, 346);
+            pnChannel.Size = new Size(190, 341);
             pnChannel.TabIndex = 1;
             // 
             // pnTitle
@@ -292,9 +292,9 @@
             pnTitle.Dock = DockStyle.Top;
             pnTitle.Location = new Point(0, 0);
             pnTitle.MaximumSize = new Size(190, 120);
-            pnTitle.MinimumSize = new Size(190, 35);
+            pnTitle.MinimumSize = new Size(190, 40);
             pnTitle.Name = "pnTitle";
-            pnTitle.Size = new Size(190, 35);
+            pnTitle.Size = new Size(190, 40);
             pnTitle.TabIndex = 0;
             // 
             // btnInvite
@@ -331,7 +331,7 @@
             // 
             // btnServer
             // 
-            btnServer.BackColor = Color.FromArgb(55, 55, 55);
+            btnServer.BackColor = Color.CornflowerBlue;
             btnServer.Cursor = Cursors.Hand;
             btnServer.FlatAppearance.BorderSize = 0;
             btnServer.FlatStyle = FlatStyle.Flat;
@@ -339,7 +339,7 @@
             btnServer.ForeColor = Color.White;
             btnServer.Location = new Point(0, 0);
             btnServer.Name = "btnServer";
-            btnServer.Size = new Size(190, 41);
+            btnServer.Size = new Size(190, 40);
             btnServer.TabIndex = 0;
             btnServer.Text = "_serverName_";
             btnServer.UseVisualStyleBackColor = false;
@@ -424,7 +424,7 @@
             ((System.ComponentModel.ISupportInitialize)btnConfig).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnPhone).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnMic).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             pnLeft.ResumeLayout(false);
             pnTitle.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -436,7 +436,7 @@
 
         private Panel panel1;
         private Panel panel2;
-        private PictureBox pictureBox1;
+        private PictureBox pbUser;
         private Panel pnLeft;
         private Panel pnUser;
         private Panel pnMessages;

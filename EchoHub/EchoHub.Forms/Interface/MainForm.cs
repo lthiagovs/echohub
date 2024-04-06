@@ -27,10 +27,10 @@ namespace EchoHub.Forms.Interface
 
         public User _logged;
 
-        public void addServer(int ServerId, string Name)
+        public void addServer(int ServerId, string Name, Image? img)
         {
 
-            ServerHub _serverHub = new ServerHub(this, ServerId, Name);
+            ServerHub _serverHub = new ServerHub(this, ServerId, Name, img);
             _serverHub.Location = new Point(0, (_serverHub.Height * pnServers.Controls.Count) + 20);
             this.pnServers.Controls.Add(_serverHub);
 
@@ -60,7 +60,27 @@ namespace EchoHub.Forms.Interface
 
                 for (int i = 0; i < _receive.Informations.Count; i += 2)
                 {
-                    addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1]);
+                    int serverID = Convert.ToInt32(_receive.Informations[i]);
+                    Image? img = null;
+
+                    //Ask for image
+                    _send = new MessagePackage();
+                    _send.Type = MessageType.GetServerPhoto;
+                    _send.Informations = new List<string>();
+                    _send.Informations.Add(serverID.ToString());
+                    Client.Send(_send);
+                    MessagePackage _receivedImage = Client.Listen();
+
+                    if(_receive.Type==MessageType.Positive)
+                    {
+
+                        byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
+                        MemoryStream _mStream = new MemoryStream(_img);
+                        img = Image.FromStream(_mStream);
+
+                    }
+
+                    addServer(serverID, _receive.Informations[i + 1], img);
                 }
 
             }
@@ -91,7 +111,7 @@ namespace EchoHub.Forms.Interface
                     pnServers.Controls.Clear();
                     for (int i = 0; i < _receive.Informations.Count; i += 2)
                     {
-                        addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1]);
+                        addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1],null);
                     }
                 }
 
@@ -102,15 +122,28 @@ namespace EchoHub.Forms.Interface
         public MainForm(User _user)
         {
             InitializeComponent();
-            this.setContent(new AccountControl(_user));
-
             _logged = _user;
+            Image? img = null;
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.GetUserPhoto;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(this._logged.Id.ToString());
+
+            Client.Send(_send);
+            MessagePackage _received = Client.Listen();
+
+            if (_received.Type == MessageType.Positive)
+            {
+                byte[] _img = Convert.FromBase64String(_received.Informations[0]);
+                MemoryStream _mStream = new MemoryStream(_img);
+                img = Image.FromStream(_mStream);
+
+            }
+
+            this.setContent(new AccountControl(_user,this,img));
+
             reloadServers();
             updateServers.Start();
-
-
-            //test
-            //addServer();
 
         }
 
@@ -124,6 +157,16 @@ namespace EchoHub.Forms.Interface
         private void updateServers_Tick(object sender, EventArgs e)
         {
             //this.updateServersRealTime();
+        }
+
+        private void pbLogo_MouseEnter(object sender, EventArgs e)
+        {
+            this.pnCorner.BackColor = Color.FromArgb(255,65,65,65);
+        }
+
+        private void pbLogo_MouseLeave(object sender, EventArgs e)
+        {
+            this.pnCorner.BackColor = Color.FromArgb(0,45,45,45);
         }
     }
 }

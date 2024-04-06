@@ -52,7 +52,7 @@ namespace EchoHub.Forms.Interface.Controls
                 User _user = new User();
                 _user.Email = txtEmail.Text;
                 _user.Password = txtPassword.Text;
-                _user.Name = txtEmail.Text;
+                _user.Name = _receive.Informations[1];
                 _user.Id = Convert.ToInt32(_receive.Informations[0]);
 
                 MainForm _mainForm = new MainForm(_user);

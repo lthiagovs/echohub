@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EchoHub.Common.Models;
+using System.Xml.Linq;
 
 namespace EchoHub.Server.Database
 {
@@ -11,6 +12,8 @@ namespace EchoHub.Server.Database
         public DbSet<UserServer> UserServer { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Friend> Friends { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -266,7 +269,7 @@ namespace EchoHub.Server.Database
 
         }
 
-        public bool createMessage(int ChatId, string Content)
+        public bool createMessage(int ChatId, int UserID, string Content)
         {
             try
             {
@@ -274,6 +277,7 @@ namespace EchoHub.Server.Database
                 Message _message = new Message();
                 _message.ChatId = ChatId;
                 _message.Content = Content;
+                _message.UserID = UserID;
                 this.Messages.Add(_message);
                 this.SaveChanges();
                 return true;
@@ -291,6 +295,13 @@ namespace EchoHub.Server.Database
             List<Message> _messages = new List<Message>();
 
             _messages = this.Messages.Where(x => x.ChatId == ChatId).ToList();
+
+            foreach(Message message in _messages)
+            {
+
+                message._User = this.Users.Single(x => x.Id == message.UserID);
+
+            }
 
             return _messages;
         }
@@ -314,6 +325,68 @@ namespace EchoHub.Server.Database
             }
 
             return _users;
+        }
+
+        public bool changeName(int UserID, string Name)
+        {
+
+            try
+            {
+
+                User _user = this.Users.Single(x => x.Id == UserID);
+                _user.Name = Name;
+                this.Users.Attach(_user);
+                this.Entry(_user).State = EntityState.Modified;
+                this.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool changePassword(int UserID, string Password)
+        {
+
+            try
+            {
+                User _user = this.Users.Single(x => x.Id == UserID);
+                _user.Password = Password;
+                this.Users.Attach(_user);
+                this.Entry(_user).State = EntityState.Modified;
+                this.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool changeChannel(int ChannelID, string Name)
+        {
+
+            try
+            {
+
+                Chat _chat = this.Chats.Single(x => x.Id == ChannelID);
+                _chat.Name = Name;
+                this.Chats.Attach(_chat);
+                this.Entry(_chat).State = EntityState.Modified;
+                this.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+
         }
 
     }

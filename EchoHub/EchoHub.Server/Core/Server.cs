@@ -5,13 +5,16 @@ using System.Text;
 using EchoHub.Common;
 using EchoHub.Common.Models;
 using EchoHub.Server.Database;
+using System.Drawing;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace EchoHub.Server.Core
 {
     public static class Server
     {
         public static int Port = 8080;
-        public static string IP = "127.0.0.1";
+        public static string IP = "26.74.172.252";
 
         public static Socket ServerListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         public static IPEndPoint Adress = new IPEndPoint(IPAddress.Parse(IP), Port);
@@ -115,6 +118,28 @@ namespace EchoHub.Server.Core
                         case MessageType.GetFriends:
                             Send = getFriends(Message.Informations);
                             break;
+                        case MessageType.ChangeName:
+                            Send.Type = changeName(Message.Informations);
+                            break;
+                        case MessageType.ChangePassword:
+                            Send.Type = changePassword(Message.Informations);
+                            break;
+                        case MessageType.ChangeChannel:
+                            Send.Type = changeChat(Message.Informations);
+                            break;
+                        case MessageType.ChangeServerPhoto:
+                            Send.Type = changeServerPhoto(Message.Informations);
+                            break;
+                        case MessageType.GetServerPhoto:
+                            Send = getServerImage(Message.Informations);
+                            break;
+                        case MessageType.ChangeUserPhoto:
+                            Send.Type = changeUserPhoto(Message.Informations);
+                            break;
+                        case MessageType.GetUserPhoto:
+                            Send = getUserImage(Message.Informations);
+                            break;
+
 
                     }
 
@@ -156,18 +181,20 @@ namespace EchoHub.Server.Core
             _retriev.Informations = new List<string>();
             try
             {
+                using (DataContext _db = new DataContext())
+                {
+                    User? _user = _db.getUser(Informations[0], Informations[1]);
 
-                if (verifyUser(Informations[0], Informations[1]))
-                {
-                    _retriev.Type = MessageType.Positive;
-                    using (DataContext _db = new DataContext())
+                    if(_user!=null)
                     {
-                        _retriev.Informations.Add(_db.getUserID(Informations[0], Informations[1]).ToString());
+                        _retriev.Informations.Add(_user.Id.ToString());
+                        _retriev.Informations.Add(_user.Name);
+                        _retriev.Type = MessageType.Positive;
                     }
-                }
-                else
-                {
-                    _retriev.Type = MessageType.Negative;
+                    else
+                    {
+                        _retriev.Type = MessageType.Negative;
+                    }
                 }
 
             }
@@ -351,7 +378,7 @@ namespace EchoHub.Server.Core
                 using(DataContext _db = new DataContext())
                 {
 
-                    if (_db.createMessage(Convert.ToInt32(Informations[0]), Informations[1]))
+                    if (_db.createMessage(Convert.ToInt32(Informations[0]), Convert.ToInt32(Informations[1]), Informations[2]))
                     {
                         return MessageType.Positive;
                     }
@@ -383,6 +410,7 @@ namespace EchoHub.Server.Core
                     foreach(Message message in _messages)
                     {
                         _retriev.Informations.Add(message.Content);
+                        _retriev.Informations.Add(message._User.Name);
                     }
 
                 }
@@ -486,6 +514,222 @@ namespace EchoHub.Server.Core
 
             return _retriev;
         }
+
+        private static MessageType changeName(List<string> Informations)
+        {
+
+            try
+            {
+
+                using(DataContext _db = new DataContext())
+                {
+
+                    if (_db.changeName(Convert.ToInt32(Informations[0]), Informations[1]))
+                        return MessageType.Positive;
+                    else
+                        return MessageType.Negative;
+
+                }
+
+            }
+            catch
+            {
+                return MessageType.Wrong;
+            }
+
+        }
+
+        private static MessageType changePassword(List<string> Informations)
+        {
+
+            try
+            {
+
+                using (DataContext _db = new DataContext())
+                {
+
+                    if (_db.changePassword(Convert.ToInt32(Informations[0]), Informations[1]))
+                        return MessageType.Positive;
+                    else
+                        return MessageType.Negative;
+
+                }
+
+            }
+            catch
+            {
+                return MessageType.Wrong;
+            }
+
+        }
+
+        private static MessageType changeChat(List<string> Informations)
+        {
+
+            try
+            {
+
+                using (DataContext _db = new DataContext())
+                {
+
+                    if (_db.changeChannel(Convert.ToInt32(Informations[0]), Informations[1]))
+                        return MessageType.Positive;
+                    else
+                        return MessageType.Negative;
+
+                }
+
+            }
+            catch
+            {
+                return MessageType.Wrong;
+            }
+
+        }
+
+        private static void verifyStaticFiles()
+        {
+            if (!Directory.Exists("Static"))
+            {
+                Directory.CreateDirectory("Static");
+                Directory.CreateDirectory("Static\\Server");
+                Directory.CreateDirectory("Static\\User");
+            }
+        }
+
+        private static bool saveServerImage(byte[] img, int serverID)
+        {
+
+            try
+            {
+                verifyStaticFiles();
+                File.WriteAllBytes("Static\\Server\\" + serverID + ".png", img);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        private static bool saveUserImage(byte[] img, int userID)
+        {
+
+            try
+            {
+                verifyStaticFiles();
+                File.WriteAllBytes("Static\\User\\" + userID + ".png", img);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        private static MessageType changeServerPhoto(List<string> Informations)
+        {
+
+            try
+            {
+
+                byte[] _img = Convert.FromBase64String(Informations[1]);
+                saveServerImage(_img, Convert.ToInt32(Informations[0]));
+
+
+                return MessageType.Positive;
+            }
+            catch
+            {
+                return MessageType.Wrong;
+            }
+
+        }
+
+        private static MessagePackage getServerImage(List<string> Informations)
+        {
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+
+            try
+            {
+
+                verifyStaticFiles();
+                int serverID = Convert.ToInt32(Informations[0]);
+                if (File.Exists("Static\\Server\\" + serverID + ".png"))
+                {
+                    byte[] _img = File.ReadAllBytes("Static\\Server\\" + serverID + ".png");
+                    _retriev.Informations.Add(Convert.ToBase64String(_img));
+                    _retriev.Type = MessageType.Positive;
+                }
+                else
+                {
+                    _retriev.Type = MessageType.Negative;
+                }
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+
+            return _retriev;
+
+        }
+
+        private static MessageType changeUserPhoto(List<string> Informations)
+        {
+
+            try
+            {
+
+                byte[] _img = Convert.FromBase64String(Informations[1]);
+                saveUserImage(_img, Convert.ToInt32(Informations[0]));
+
+
+                return MessageType.Positive;
+            }
+            catch
+            {
+                return MessageType.Wrong;
+            }
+
+
+        }
+
+        private static MessagePackage getUserImage(List<string> Informations)
+        {
+            MessagePackage _retriev = new MessagePackage();
+            _retriev.Informations = new List<string>();
+
+            try
+            {
+
+                verifyStaticFiles();
+                int userID = Convert.ToInt32(Informations[0]);
+                if (File.Exists("Static\\User\\" + userID + ".png"))
+                {
+                    byte[] _img = File.ReadAllBytes("Static\\User\\" + userID + ".png");
+                    _retriev.Informations.Add(Convert.ToBase64String(_img));
+                    _retriev.Type = MessageType.Positive;
+                }
+                else
+                {
+                    _retriev.Type = MessageType.Negative;
+                }
+
+            }
+            catch
+            {
+                _retriev.Type = MessageType.Wrong;
+            }
+
+            return _retriev;
+
+        }
+
 
         #endregion
     }

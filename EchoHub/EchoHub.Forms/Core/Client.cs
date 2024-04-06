@@ -9,7 +9,7 @@ namespace EchoHub.Forms.Core
     public static class Client
     {
         public static int Port = 8080;
-        public static string IPAdress = "127.0.0.1";
+        public static string IPAdress = "26.74.172.252";
 
         public static Socket ClientSocket;
         public static IPEndPoint Adress = new IPEndPoint(IPAddress.Parse(IPAdress), Port);

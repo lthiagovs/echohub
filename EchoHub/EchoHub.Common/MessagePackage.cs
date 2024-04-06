@@ -17,7 +17,14 @@
         CreateChat,
         CreateMessage,
         GetFriend,
-        BoundUser
+        BoundUser,
+        ChangeName,
+        ChangePassword,
+        ChangeChannel,
+        ChangeServerPhoto,
+        GetServerPhoto,
+        ChangeUserPhoto,
+        GetUserPhoto
 
     }
 

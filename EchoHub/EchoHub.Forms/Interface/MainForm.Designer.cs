@@ -35,14 +35,14 @@
             pnTop = new Panel();
             pnLeft = new Panel();
             pnServers = new Panel();
-            panel1 = new Panel();
+            pnCorner = new Panel();
             label2 = new Label();
             pbLogo = new PictureBox();
             label1 = new Label();
             updateServers = new System.Windows.Forms.Timer(components);
             pnMain.SuspendLayout();
             pnLeft.SuspendLayout();
-            panel1.SuspendLayout();
+            pnCorner.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
             SuspendLayout();
             // 
@@ -79,7 +79,7 @@
             // 
             pnLeft.BackColor = Color.FromArgb(45, 45, 45);
             pnLeft.Controls.Add(pnServers);
-            pnLeft.Controls.Add(panel1);
+            pnLeft.Controls.Add(pnCorner);
             pnLeft.Dock = DockStyle.Left;
             pnLeft.Location = new Point(0, 0);
             pnLeft.Name = "pnLeft";
@@ -96,16 +96,16 @@
             pnServers.Size = new Size(60, 418);
             pnServers.TabIndex = 3;
             // 
-            // panel1
+            // pnCorner
             // 
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(pbLogo);
-            panel1.Controls.Add(label1);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(60, 73);
-            panel1.TabIndex = 2;
+            pnCorner.Controls.Add(label2);
+            pnCorner.Controls.Add(pbLogo);
+            pnCorner.Controls.Add(label1);
+            pnCorner.Dock = DockStyle.Top;
+            pnCorner.Location = new Point(0, 0);
+            pnCorner.Name = "pnCorner";
+            pnCorner.Size = new Size(60, 73);
+            pnCorner.TabIndex = 2;
             // 
             // label2
             // 
@@ -128,6 +128,8 @@
             pbLogo.TabIndex = 0;
             pbLogo.TabStop = false;
             pbLogo.Click += pbLogo_Click;
+            pbLogo.MouseEnter += pbLogo_MouseEnter;
+            pbLogo.MouseLeave += pbLogo_MouseLeave;
             // 
             // label1
             // 
@@ -156,7 +158,7 @@
             Text = "MainForm";
             pnMain.ResumeLayout(false);
             pnLeft.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            pnCorner.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
             ResumeLayout(false);
         }
@@ -169,7 +171,7 @@
         private Panel pnContent;
         private PictureBox pbLogo;
         private Label label1;
-        private Panel panel1;
+        private Panel pnCorner;
         private Panel pnServers;
         private Label label2;
         private System.Windows.Forms.Timer updateServers;

@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MessageControl));
             txtName = new Label();
-            pictureBox1 = new PictureBox();
+            pbUser = new PictureBox();
             txtContent = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             SuspendLayout();
             // 
             // txtName
@@ -46,15 +46,15 @@
             txtName.TabIndex = 5;
             txtName.Text = "_name_";
             // 
-            // pictureBox1
+            // pbUser
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(13, 4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(50, 50);
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
+            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
+            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
+            pbUser.Location = new Point(13, 4);
+            pbUser.Name = "pbUser";
+            pbUser.Size = new Size(50, 50);
+            pbUser.TabIndex = 4;
+            pbUser.TabStop = false;
             // 
             // txtContent
             // 
@@ -76,18 +76,18 @@
             BackColor = Color.FromArgb(60, 60, 60);
             Controls.Add(txtContent);
             Controls.Add(txtName);
-            Controls.Add(pictureBox1);
+            Controls.Add(pbUser);
             Name = "MessageControl";
             Padding = new Padding(10);
             Size = new Size(504, 67);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private PictureBox pictureBox1;
         public Label txtName;
         public TextBox txtContent;
+        public PictureBox pbUser;
     }
 }

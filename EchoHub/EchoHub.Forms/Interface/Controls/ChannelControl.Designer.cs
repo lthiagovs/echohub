@@ -29,21 +29,25 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChannelControl));
-            pictureBox1 = new PictureBox();
+            btnChannel = new PictureBox();
             txtName = new Label();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnChannel).BeginInit();
             SuspendLayout();
             // 
-            // pictureBox1
+            // btnChannel
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
-            pictureBox1.Dock = DockStyle.Left;
-            pictureBox1.Location = new Point(2, 2);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(40, 39);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            btnChannel.BackgroundImage = (Image)resources.GetObject("btnChannel.BackgroundImage");
+            btnChannel.BackgroundImageLayout = ImageLayout.Center;
+            btnChannel.Cursor = Cursors.Hand;
+            btnChannel.Dock = DockStyle.Left;
+            btnChannel.Location = new Point(2, 2);
+            btnChannel.Name = "btnChannel";
+            btnChannel.Size = new Size(40, 39);
+            btnChannel.TabIndex = 0;
+            btnChannel.TabStop = false;
+            btnChannel.Click += btnChannel_Click;
+            btnChannel.MouseEnter += btnChannel_MouseEnter;
+            btnChannel.MouseLeave += btnChannel_MouseLeave;
             // 
             // txtName
             // 
@@ -58,6 +62,8 @@
             txtName.Text = "_channel_";
             txtName.TextAlign = ContentAlignment.MiddleCenter;
             txtName.Click += txtName_Click;
+            txtName.MouseEnter += txtName_MouseEnter;
+            txtName.MouseLeave += txtName_MouseLeave;
             // 
             // ChannelControl
             // 
@@ -65,17 +71,17 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(55, 55, 55);
             Controls.Add(txtName);
-            Controls.Add(pictureBox1);
+            Controls.Add(btnChannel);
             Name = "ChannelControl";
             Padding = new Padding(2);
             Size = new Size(190, 43);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnChannel).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private PictureBox pictureBox1;
+        private PictureBox btnChannel;
         public Label txtName;
     }
 }

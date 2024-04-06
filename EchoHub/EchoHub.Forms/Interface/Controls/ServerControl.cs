@@ -14,6 +14,7 @@ namespace EchoHub.Forms.Interface.Controls
         private MainForm _target;
         public ChannelControl _selectedChannel;
         private int _id;
+        private Image? _userImg;
 
         private bool titleTimerTrigger = false;
 
@@ -74,10 +75,16 @@ namespace EchoHub.Forms.Interface.Controls
 
         }
 
-        private void addMessage(string User, string Content)
+        private void addMessage(string User, string Content, Image? img)
         {
 
             MessageControl _messageControl = new MessageControl();
+            if (img != null)
+            {
+                _messageControl.pbUser.Image = img;
+                _messageControl.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            }
             _messageControl.txtContent.Text = Content;
             _messageControl.txtName.Text = User;
             _messageControl.Location = new Point(0, pnMessages.Controls.Count * _messageControl.Height);
@@ -130,6 +137,7 @@ namespace EchoHub.Forms.Interface.Controls
         public void reloadMessages(int chatId)
         {
 
+            clearMessages();
             MessagePackage _send = new MessagePackage();
             _send.Type = MessageType.GetMessages;
             _send.Informations = new List<string>();
@@ -141,8 +149,31 @@ namespace EchoHub.Forms.Interface.Controls
 
             if (_receive.Type == MessageType.Positive)
             {
-                foreach (string message in _receive.Informations)
-                    addMessage(_user.Name, message);
+
+                for(int i = 0;i<_receive.Informations.Count();i+=2)
+                {
+
+                    Image? img = null;
+                     _send = new MessagePackage();
+                    _send.Type = MessageType.GetUserPhoto;
+                    _send.Informations = new List<string>();
+                    _send.Informations.Add(_user.Id.ToString());
+
+                    Client.Send(_send);
+                    MessagePackage _receivedImage = Client.Listen();
+
+                    if (_receivedImage.Type == MessageType.Positive)
+                    {
+                        byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
+                        MemoryStream _mStream = new MemoryStream(_img);
+                        img = Image.FromStream(_mStream);
+
+                    }
+
+                    addMessage(_receive.Informations[i+1],_receive.Informations[i], img);
+
+                }
+
             }
             else
             {
@@ -179,6 +210,27 @@ namespace EchoHub.Forms.Interface.Controls
             this.btnMic.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnMic.Width, btnMic.Height, _round, _round));
             this.btnPhone.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnPhone.Width, btnPhone.Height, _round, _round));
 
+            _userImg = null;
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.GetUserPhoto;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(_user.Id.ToString());
+
+            Client.Send(_send);
+            MessagePackage _receivedImage = Client.Listen();
+
+            if (_receivedImage.Type == MessageType.Positive)
+            {
+                byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
+                MemoryStream _mStream = new MemoryStream(_img);
+                _userImg = Image.FromStream(_mStream);
+                this.pbUser.Image = _userImg;
+                this.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            }
+
+            
+
             //test
 
 
@@ -195,6 +247,7 @@ namespace EchoHub.Forms.Interface.Controls
                 MessagePackage _send = new MessagePackage();
                 _send.Informations = new List<string>();
                 _send.Informations.Add(_selectedChannel._id.ToString());
+                _send.Informations.Add(this._target._logged.Id.ToString());
                 _send.Informations.Add(txtChat.Text);
                 _send.Type = MessageType.CreateMessage;
 
@@ -204,7 +257,7 @@ namespace EchoHub.Forms.Interface.Controls
 
                 if (_received.Type == MessageType.Positive)
                 {
-                    addMessage(this._user.Name, txtChat.Text);
+                    addMessage(this._user.Name, txtChat.Text, _userImg);
                     txtChat.Text = "";
                 }
                 else
@@ -218,7 +271,24 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnConfig_Click(object sender, EventArgs e)
         {
-            this._target.setContent(new AccountControl(this._user));
+            Image? img = null;
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.GetUserPhoto;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(this._user.Id.ToString());
+
+            Client.Send(_send);
+            MessagePackage _received = Client.Listen();
+
+            if(_received.Type==MessageType.Positive)
+            {
+                byte[] _img = Convert.FromBase64String(_received.Informations[0]);
+                MemoryStream _mStream = new MemoryStream(_img);
+                img = Image.FromStream(_mStream);
+
+            }
+
+            this._target.setContent(new AccountControl(this._user,this._target,img));
         }
 
         private void btnGif_Click(object sender, EventArgs e)

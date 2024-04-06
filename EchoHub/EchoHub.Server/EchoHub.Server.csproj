@@ -23,4 +23,9 @@
     <ProjectReference Include="..\EchoHub.Common\EchoHub.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Static\Server\" />
+    <Folder Include="Static\User\" />
+  </ItemGroup>
+
 </Project>

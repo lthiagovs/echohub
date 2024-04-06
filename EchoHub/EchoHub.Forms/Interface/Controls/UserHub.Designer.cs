@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserHub));
             txtName = new Label();
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pbUser = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             SuspendLayout();
             // 
             // txtName
@@ -45,15 +45,15 @@
             txtName.TabIndex = 3;
             txtName.Text = "_name_";
             // 
-            // pictureBox1
+            // pbUser
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(16, 10);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(50, 50);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
+            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
+            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
+            pbUser.Location = new Point(16, 10);
+            pbUser.Name = "pbUser";
+            pbUser.Size = new Size(50, 50);
+            pbUser.TabIndex = 2;
+            pbUser.TabStop = false;
             // 
             // UserHub
             // 
@@ -61,11 +61,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(55, 55, 55);
             Controls.Add(txtName);
-            Controls.Add(pictureBox1);
+            Controls.Add(pbUser);
             Name = "UserHub";
             Padding = new Padding(10);
             Size = new Size(170, 67);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -73,6 +73,6 @@
         #endregion
 
         private Label txtName;
-        private PictureBox pictureBox1;
+        private PictureBox pbUser;
     }
 }
