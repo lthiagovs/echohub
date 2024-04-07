@@ -18,7 +18,7 @@ namespace EchoHub.Forms.Interface.Controls
             txtName.Text = _user.Name;
             txtPassword.Text = _user.Password;
 
-            if(img != null )
+            if (img != null)
             {
                 this.pbUser.Image = img;
                 this.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -86,19 +86,8 @@ namespace EchoHub.Forms.Interface.Controls
 
         }
 
-        private void btnChangePhoto_MouseEnter(object sender, EventArgs e)
+        private void pbUser_Click(object sender, EventArgs e)
         {
-            this.btnChangePhoto.BackColor = Color.CornflowerBlue;
-        }
-
-        private void btnChangePhoto_MouseLeave(object sender, EventArgs e)
-        {
-            this.btnChangePhoto.BackColor = Color.FromArgb(0, 55, 55, 55);
-        }
-
-        private void btnChangePhoto_Click(object sender, EventArgs e)
-        {
-
             OpenFileDialog _filePicker = new OpenFileDialog();
             _filePicker.Title = "Pick a picture!";
             _filePicker.Filter = "Images (*.png*)|*.png*";
@@ -125,7 +114,7 @@ namespace EchoHub.Forms.Interface.Controls
                     Client.Send(_send);
                     MessagePackage _received = Client.Listen();
 
-                    if(_received.Type!=MessageType.Positive)
+                    if (_received.Type != MessageType.Positive)
                     {
                         AdviceDialog _advice = new AdviceDialog("Erro interno...");
                         _advice.ShowDialog();
@@ -139,7 +128,6 @@ namespace EchoHub.Forms.Interface.Controls
                 }
 
             }
-
         }
     }
 }

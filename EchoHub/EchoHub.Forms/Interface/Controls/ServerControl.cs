@@ -2,6 +2,7 @@
 using EchoHub.Common.Models;
 using EchoHub.Forms.Core;
 using EchoHub.Forms.Interface.Dialogs;
+using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 
 namespace EchoHub.Forms.Interface.Controls
@@ -35,7 +36,7 @@ namespace EchoHub.Forms.Interface.Controls
         private void addUser(int Id, string Name)
         {
 
-            UserHub _userHub = new UserHub(Id,Name);
+            UserHub _userHub = new UserHub(Id, Name);
             _userHub.Location = new Point(0, pnUser.Controls.Count * _userHub.Height);
             pnUser.Controls.Add(_userHub);
 
@@ -52,10 +53,10 @@ namespace EchoHub.Forms.Interface.Controls
 
             MessagePackage _received = Client.Listen();
 
-            if (_received.Type==MessageType.Positive)
+            if (_received.Type == MessageType.Positive)
             {
 
-                for(int i = 0;i<_received.Informations.Count;i+=2)
+                for (int i = 0; i < _received.Informations.Count; i += 2)
                 {
 
                     addUser(
@@ -75,10 +76,10 @@ namespace EchoHub.Forms.Interface.Controls
 
         }
 
-        private void addMessage(string User, string Content, Image? img)
+        private void addMessage(string User, string Content, Image? img, int UserID)
         {
-
-            MessageControl _messageControl = new MessageControl();
+            upScroll();
+            MessageControl _messageControl = new MessageControl(UserID);
             if (img != null)
             {
                 _messageControl.pbUser.Image = img;
@@ -106,6 +107,27 @@ namespace EchoHub.Forms.Interface.Controls
             pnMessages.Controls.Clear();
         }
 
+        //Fix screen issues when throwing messages
+        private void pullScroll()
+        {
+
+            using (Control c = new Control() { Parent = this.pnMessages, Dock = DockStyle.Bottom })
+            {
+                this.pnMessages.ScrollControlIntoView(c);
+                c.Parent = null;
+            }
+
+        }
+
+        private void upScroll()
+        {
+            using (Control c = new Control() { Parent = this.pnMessages, Dock = DockStyle.Top })
+            {
+                this.pnMessages.ScrollControlIntoView(c);
+                c.Parent = null;
+            }
+        }
+
         private void reloadChannels()
         {
 
@@ -122,7 +144,7 @@ namespace EchoHub.Forms.Interface.Controls
 
                 for (int i = 0; i < _receive.Informations.Count(); i += 2)
                 {
-                    addChannel(_receive.Informations[i+1], Convert.ToInt32(_receive.Informations[i]));
+                    addChannel(_receive.Informations[i + 1], Convert.ToInt32(_receive.Informations[i]));
                 }
 
             }
@@ -150,14 +172,14 @@ namespace EchoHub.Forms.Interface.Controls
             if (_receive.Type == MessageType.Positive)
             {
 
-                for(int i = 0;i<_receive.Informations.Count();i+=2)
+                for (int i = 0; i < _receive.Informations.Count(); i += 3)
                 {
-
+                    int _messageUserID = Convert.ToInt32(_receive.Informations[i + 2]);
                     Image? img = null;
-                     _send = new MessagePackage();
+                    _send = new MessagePackage();
                     _send.Type = MessageType.GetUserPhoto;
                     _send.Informations = new List<string>();
-                    _send.Informations.Add(_user.Id.ToString());
+                    _send.Informations.Add(_messageUserID.ToString());
 
                     Client.Send(_send);
                     MessagePackage _receivedImage = Client.Listen();
@@ -170,7 +192,7 @@ namespace EchoHub.Forms.Interface.Controls
 
                     }
 
-                    addMessage(_receive.Informations[i+1],_receive.Informations[i], img);
+                    addMessage(_receive.Informations[i + 1], _receive.Informations[i], img, _messageUserID);
 
                 }
 
@@ -180,7 +202,6 @@ namespace EchoHub.Forms.Interface.Controls
                 AdviceDialog _advice = new AdviceDialog("Erro interno ao carregar as mensagens...");
                 _advice.Show();
             }
-
         }
 
         public void setChannel(ChannelControl channel)
@@ -229,7 +250,7 @@ namespace EchoHub.Forms.Interface.Controls
 
             }
 
-            
+            messagesTimer.Start();
 
             //test
 
@@ -243,7 +264,6 @@ namespace EchoHub.Forms.Interface.Controls
 
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-
                 MessagePackage _send = new MessagePackage();
                 _send.Informations = new List<string>();
                 _send.Informations.Add(_selectedChannel._id.ToString());
@@ -257,7 +277,7 @@ namespace EchoHub.Forms.Interface.Controls
 
                 if (_received.Type == MessageType.Positive)
                 {
-                    addMessage(this._user.Name, txtChat.Text, _userImg);
+                    addMessage(this._user.Name, txtChat.Text, _userImg, _target._logged.Id);
                     txtChat.Text = "";
                 }
                 else
@@ -265,7 +285,7 @@ namespace EchoHub.Forms.Interface.Controls
                     AdviceDialog _advice = new AdviceDialog("Erro interno ao enviar a mensagem...");
                     _advice.ShowDialog();
                 }
-
+                pullScroll();
             }
         }
 
@@ -280,7 +300,7 @@ namespace EchoHub.Forms.Interface.Controls
             Client.Send(_send);
             MessagePackage _received = Client.Listen();
 
-            if(_received.Type==MessageType.Positive)
+            if (_received.Type == MessageType.Positive)
             {
                 byte[] _img = Convert.FromBase64String(_received.Informations[0]);
                 MemoryStream _mStream = new MemoryStream(_img);
@@ -288,7 +308,7 @@ namespace EchoHub.Forms.Interface.Controls
 
             }
 
-            this._target.setContent(new AccountControl(this._user,this._target,img));
+            this._target.setContent(new AccountControl(this._user, this._target, img));
         }
 
         private void btnGif_Click(object sender, EventArgs e)
@@ -352,7 +372,7 @@ namespace EchoHub.Forms.Interface.Controls
         private void btnInvite_Click(object sender, EventArgs e)
         {
             InviteDialog _invite = new InviteDialog();
-            if(_invite.ShowDialog()== DialogResult.OK)
+            if (_invite.ShowDialog() == DialogResult.OK)
             {
                 MessagePackage _send = new MessagePackage();
                 _send.Type = MessageType.GetFriend;
@@ -362,7 +382,7 @@ namespace EchoHub.Forms.Interface.Controls
                 Client.Send(_send);
                 MessagePackage _received = Client.Listen();
 
-                if(_received.Type==MessageType.Positive)
+                if (_received.Type == MessageType.Positive)
                 {
                     int FriendID = Convert.ToInt32(_received.Informations[0]);
                     string FriendName = _received.Informations[1];
@@ -374,7 +394,7 @@ namespace EchoHub.Forms.Interface.Controls
 
                     Client.Send(_send);
                     _received = Client.Listen();
-                    if(_received.Type== MessageType.Positive)
+                    if (_received.Type == MessageType.Positive)
                     {
                         addUser(FriendID, FriendName);
                     }
@@ -393,6 +413,78 @@ namespace EchoHub.Forms.Interface.Controls
                 }
 
             }
+
+        }
+
+
+        //Update Messages in Async
+        private List<Common.Models.Message> updateMessagesAsync()
+        {
+            List<Common.Models.Message> _messages = new List<Common.Models.Message>();
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.GetMessages;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(_selectedChannel._id.ToString());
+            Client.Send(_send);
+            MessagePackage _received = Client.Listen();
+            int messageNumber = pnMessages.Controls.Count;
+
+            if (_received.Type == MessageType.Positive)
+            {
+
+                for (int i = 0; i < _received.Informations.Count(); i += 3)
+                {
+
+                    if (i / 3 >= messageNumber)
+                    {
+                        Common.Models.Message _message = new Common.Models.Message();
+                        _message.Content = _received.Informations[i];
+                        _message._User = new User();
+                        _message._User.Name = _received.Informations[i+1];
+                        _message.UserID = Convert.ToInt32(_received.Informations[i + 2]);
+                        _messages.Add(_message);
+                    }
+
+                }
+
+            }
+
+            return _messages;
+
+
+        }
+        private void messagesTimer_Tick(object sender, EventArgs e)
+        {
+
+            //Task<List<Common.Models.Message>> update = await updateMessagesAsync();
+            List<Common.Models.Message> _messages = updateMessagesAsync();
+
+            foreach (var message in _messages)
+            {
+
+                int _messageUserID = message.UserID;
+                Image? img = null;
+                MessagePackage _send = new MessagePackage();
+                _send.Type = MessageType.GetUserPhoto;
+                _send.Informations = new List<string>();
+                _send.Informations.Add(_messageUserID.ToString());
+
+                Client.Send(_send);
+                MessagePackage _receivedImage = Client.Listen();
+
+                if (_receivedImage.Type == MessageType.Positive)
+                {
+                    byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
+                    MemoryStream _mStream = new MemoryStream(_img);
+                    img = Image.FromStream(_mStream);
+
+                }
+
+                addMessage(message._User.Name, message.Content, img, message.UserID);
+                pullScroll();
+
+            }
+
 
         }
     }

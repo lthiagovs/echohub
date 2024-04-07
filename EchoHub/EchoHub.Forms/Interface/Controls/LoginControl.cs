@@ -11,6 +11,8 @@ namespace EchoHub.Forms.Interface.Controls
     {
 
         private int _round = 8;
+        private AccountForm _target;
+
         //Round Borders
         #region
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -25,14 +27,19 @@ namespace EchoHub.Forms.Interface.Controls
         );
         #endregion
 
-        public LoginControl()
+        public LoginControl(AccountForm _target)
         {
             InitializeComponent();
             pnEmail.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnEmail.Width, pnEmail.Height, _round, _round));
             pnPassword.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pnPassword.Width, pnPassword.Height, _round, _round));
             btnLogin.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnLogin.Width, btnLogin.Height, 20, 20));
+            this._target = _target;
 
+        }
 
+        private void OpenMainForm(User _user)
+        {
+            Application.Run(new MainForm(_user));
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -55,8 +62,13 @@ namespace EchoHub.Forms.Interface.Controls
                 _user.Name = _receive.Informations[1];
                 _user.Id = Convert.ToInt32(_receive.Informations[0]);
 
-                MainForm _mainForm = new MainForm(_user);
-                _mainForm.Show();
+                Thread MainFormThread = new Thread(() => OpenMainForm(_user));
+                MainFormThread.SetApartmentState(ApartmentState.STA);
+                MainFormThread.Start();
+
+                _target.Dispose();
+
+
             }
             else
             {

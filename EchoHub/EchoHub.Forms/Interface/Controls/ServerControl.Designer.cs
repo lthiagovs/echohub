@@ -41,11 +41,11 @@
             panel8 = new Panel();
             pictureBox2 = new PictureBox();
             panel2 = new Panel();
+            pbUser = new Elements.RoundPictureBox();
             btnConfig = new PictureBox();
             btnPhone = new PictureBox();
             btnMic = new PictureBox();
             txtUserName = new Label();
-            pbUser = new PictureBox();
             pnLeft = new Panel();
             pnChannel = new Panel();
             pnTitle = new Panel();
@@ -58,6 +58,7 @@
             panel5 = new Panel();
             txtChatName = new Label();
             titleTimer = new System.Windows.Forms.Timer(components);
+            messagesTimer = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
             pnBottom.SuspendLayout();
             pnChat.SuspendLayout();
@@ -68,10 +69,10 @@
             panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnConfig).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnPhone).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnMic).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             pnLeft.SuspendLayout();
             pnTitle.SuspendLayout();
             panel4.SuspendLayout();
@@ -194,17 +195,28 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(40, 40, 40);
+            panel2.Controls.Add(pbUser);
             panel2.Controls.Add(btnConfig);
             panel2.Controls.Add(btnPhone);
             panel2.Controls.Add(btnMic);
             panel2.Controls.Add(txtUserName);
-            panel2.Controls.Add(pbUser);
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(10);
             panel2.Size = new Size(190, 70);
             panel2.TabIndex = 0;
+            // 
+            // pbUser
+            // 
+            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
+            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
+            pbUser.Dock = DockStyle.Left;
+            pbUser.Location = new Point(10, 10);
+            pbUser.Name = "pbUser";
+            pbUser.Size = new Size(50, 50);
+            pbUser.TabIndex = 5;
+            pbUser.TabStop = false;
             // 
             // btnConfig
             // 
@@ -250,17 +262,6 @@
             txtUserName.Size = new Size(52, 17);
             txtUserName.TabIndex = 1;
             txtUserName.Text = "_name_";
-            // 
-            // pbUser
-            // 
-            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
-            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
-            pbUser.Dock = DockStyle.Left;
-            pbUser.Location = new Point(10, 10);
-            pbUser.Name = "pbUser";
-            pbUser.Size = new Size(50, 50);
-            pbUser.TabIndex = 0;
-            pbUser.TabStop = false;
             // 
             // pnLeft
             // 
@@ -398,6 +399,11 @@
             titleTimer.Interval = 10;
             titleTimer.Tick += titleTimer_Tick;
             // 
+            // messagesTimer
+            // 
+            messagesTimer.Interval = 2000;
+            messagesTimer.Tick += messagesTimer_Tick;
+            // 
             // ServerControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -421,10 +427,10 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnConfig).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnPhone).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnMic).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             pnLeft.ResumeLayout(false);
             pnTitle.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -436,7 +442,6 @@
 
         private Panel panel1;
         private Panel panel2;
-        private PictureBox pbUser;
         private Panel pnLeft;
         private Panel pnUser;
         private Panel pnMessages;
@@ -462,5 +467,7 @@
         private Button btnInvite;
         private Button btnCreateChat;
         private System.Windows.Forms.Timer titleTimer;
+        public Elements.RoundPictureBox pbUser;
+        private System.Windows.Forms.Timer messagesTimer;
     }
 }

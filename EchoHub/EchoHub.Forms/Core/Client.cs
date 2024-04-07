@@ -37,12 +37,27 @@ namespace EchoHub.Forms.Core
 
         }
 
+        public async static Task<MessagePackage> ListenAsync()
+        {
+            try
+            {
+                byte[] MsgFromServer = new byte[1000000];
+                int size = await Client.ClientSocket.ReceiveAsync(MsgFromServer);
+                string json = (Encoding.ASCII.GetString(MsgFromServer, 0, size));
+                return JsonSerializer.Deserialize<MessagePackage>(json);
+            }
+            catch
+            {
+                return new MessagePackage();
+            }
+
+        }
+
         public static void Send(MessagePackage Message)
         {
             string messageClient = JsonSerializer.Serialize<MessagePackage>(Message);
             Client.ClientSocket.Send(Encoding.ASCII.GetBytes(messageClient), 0, messageClient.Length, SocketFlags.None);
         }
-
 
     }
 

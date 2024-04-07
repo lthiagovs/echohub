@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MessageControl));
             txtName = new Label();
-            pbUser = new PictureBox();
             txtContent = new TextBox();
+            pbUser = new Elements.RoundPictureBox();
             ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             SuspendLayout();
             // 
@@ -46,16 +45,6 @@
             txtName.TabIndex = 5;
             txtName.Text = "_name_";
             // 
-            // pbUser
-            // 
-            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
-            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
-            pbUser.Location = new Point(13, 4);
-            pbUser.Name = "pbUser";
-            pbUser.Size = new Size(50, 50);
-            pbUser.TabIndex = 4;
-            pbUser.TabStop = false;
-            // 
             // txtContent
             // 
             txtContent.BackColor = Color.FromArgb(60, 60, 60);
@@ -69,14 +58,22 @@
             txtContent.TabIndex = 6;
             txtContent.Text = "_MESSAGE_";
             // 
+            // pbUser
+            // 
+            pbUser.Location = new Point(3, 4);
+            pbUser.Name = "pbUser";
+            pbUser.Size = new Size(60, 60);
+            pbUser.TabIndex = 8;
+            pbUser.TabStop = false;
+            // 
             // MessageControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(60, 60, 60);
+            Controls.Add(pbUser);
             Controls.Add(txtContent);
             Controls.Add(txtName);
-            Controls.Add(pbUser);
             Name = "MessageControl";
             Padding = new Padding(10);
             Size = new Size(504, 67);
@@ -88,6 +85,6 @@
         #endregion
         public Label txtName;
         public TextBox txtContent;
-        public PictureBox pbUser;
+        public Elements.RoundPictureBox pbUser;
     }
 }

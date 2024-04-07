@@ -1,4 +1,6 @@
-﻿namespace EchoHub.Forms.Interface.Controls
+﻿using EchoHub.Forms.Elements;
+
+namespace EchoHub.Forms.Interface.Controls
 {
     partial class AccountControl
     {
@@ -30,8 +32,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountControl));
             panel1 = new Panel();
-            btnChangePhoto = new PictureBox();
             panel2 = new Panel();
+            pbUser = new RoundPictureBox();
             btnChangePassword = new Button();
             panel6 = new Panel();
             label5 = new Label();
@@ -43,26 +45,22 @@
             label4 = new Label();
             txtName = new Label();
             btnChangeName = new Button();
-            pbUser = new PictureBox();
             panel5 = new Panel();
             button4 = new Button();
             button3 = new Button();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)btnChangePhoto).BeginInit();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             panel6.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             panel5.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(55, 55, 55);
-            panel1.Controls.Add(btnChangePhoto);
             panel1.Controls.Add(panel2);
-            panel1.Controls.Add(pbUser);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(30, 20);
             panel1.Name = "panel1";
@@ -70,33 +68,33 @@
             panel1.Size = new Size(804, 200);
             panel1.TabIndex = 0;
             // 
-            // btnChangePhoto
-            // 
-            btnChangePhoto.BackgroundImage = (Image)resources.GetObject("btnChangePhoto.BackgroundImage");
-            btnChangePhoto.BackgroundImageLayout = ImageLayout.Stretch;
-            btnChangePhoto.Cursor = Cursors.Hand;
-            btnChangePhoto.Location = new Point(140, 140);
-            btnChangePhoto.Name = "btnChangePhoto";
-            btnChangePhoto.Size = new Size(40, 40);
-            btnChangePhoto.TabIndex = 2;
-            btnChangePhoto.TabStop = false;
-            btnChangePhoto.Click += btnChangePhoto_Click;
-            btnChangePhoto.MouseEnter += btnChangePhoto_MouseEnter;
-            btnChangePhoto.MouseLeave += btnChangePhoto_MouseLeave;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(50, 50, 50);
+            panel2.Controls.Add(pbUser);
             panel2.Controls.Add(btnChangePassword);
             panel2.Controls.Add(panel6);
             panel2.Controls.Add(panel4);
             panel2.Controls.Add(panel3);
             panel2.Controls.Add(btnChangeName);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(180, 20);
+            panel2.Location = new Point(20, 20);
             panel2.Name = "panel2";
-            panel2.Size = new Size(604, 160);
+            panel2.Size = new Size(764, 160);
             panel2.TabIndex = 1;
+            // 
+            // pbUser
+            // 
+            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
+            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
+            pbUser.Cursor = Cursors.Hand;
+            pbUser.Dock = DockStyle.Left;
+            pbUser.Location = new Point(0, 0);
+            pbUser.Name = "pbUser";
+            pbUser.Size = new Size(160, 160);
+            pbUser.TabIndex = 13;
+            pbUser.TabStop = false;
+            pbUser.Click += pbUser_Click;
             // 
             // btnChangePassword
             // 
@@ -107,7 +105,7 @@
             btnChangePassword.FlatStyle = FlatStyle.Flat;
             btnChangePassword.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnChangePassword.ForeColor = Color.White;
-            btnChangePassword.Location = new Point(510, 107);
+            btnChangePassword.Location = new Point(670, 107);
             btnChangePassword.Name = "btnChangePassword";
             btnChangePassword.Size = new Size(84, 32);
             btnChangePassword.TabIndex = 12;
@@ -119,7 +117,7 @@
             // 
             panel6.Controls.Add(label5);
             panel6.Controls.Add(txtPassword);
-            panel6.Location = new Point(6, 102);
+            panel6.Location = new Point(349, 102);
             panel6.Name = "panel6";
             panel6.Size = new Size(254, 40);
             panel6.TabIndex = 10;
@@ -152,7 +150,7 @@
             // 
             panel4.Controls.Add(label2);
             panel4.Controls.Add(txtEmail);
-            panel4.Location = new Point(6, 8);
+            panel4.Location = new Point(349, 8);
             panel4.Name = "panel4";
             panel4.Size = new Size(254, 40);
             panel4.TabIndex = 1;
@@ -185,7 +183,7 @@
             // 
             panel3.Controls.Add(label4);
             panel3.Controls.Add(txtName);
-            panel3.Location = new Point(6, 56);
+            panel3.Location = new Point(349, 56);
             panel3.Name = "panel3";
             panel3.Size = new Size(254, 40);
             panel3.TabIndex = 0;
@@ -223,25 +221,13 @@
             btnChangeName.FlatStyle = FlatStyle.Flat;
             btnChangeName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnChangeName.ForeColor = Color.White;
-            btnChangeName.Location = new Point(510, 56);
+            btnChangeName.Location = new Point(670, 56);
             btnChangeName.Name = "btnChangeName";
             btnChangeName.Size = new Size(84, 32);
             btnChangeName.TabIndex = 7;
             btnChangeName.Text = "Alterar";
             btnChangeName.UseVisualStyleBackColor = false;
             btnChangeName.Click += btnChangeName_Click;
-            // 
-            // pbUser
-            // 
-            pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
-            pbUser.BackgroundImageLayout = ImageLayout.Stretch;
-            pbUser.BorderStyle = BorderStyle.FixedSingle;
-            pbUser.Dock = DockStyle.Left;
-            pbUser.Location = new Point(20, 20);
-            pbUser.Name = "pbUser";
-            pbUser.Size = new Size(160, 160);
-            pbUser.TabIndex = 0;
-            pbUser.TabStop = false;
             // 
             // panel5
             // 
@@ -297,15 +283,14 @@
             Padding = new Padding(30, 20, 30, 20);
             Size = new Size(864, 451);
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)btnChangePhoto).EndInit();
             panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -313,7 +298,6 @@
         #endregion
 
         private Panel panel1;
-        private PictureBox pbUser;
         private Panel panel5;
         private Panel panel2;
         private Label txtName;
@@ -329,6 +313,6 @@
         private Button btnChangePassword;
         private Button button4;
         private Button button3;
-        private PictureBox btnChangePhoto;
+        private RoundPictureBox pbUser;
     }
 }

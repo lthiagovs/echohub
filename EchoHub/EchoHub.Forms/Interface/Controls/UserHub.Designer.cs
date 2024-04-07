@@ -30,18 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserHub));
             txtName = new Label();
-            pbUser = new PictureBox();
+            pbUser = new Elements.RoundPictureBox();
             ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             SuspendLayout();
             // 
             // txtName
             // 
-            txtName.AutoSize = true;
-            txtName.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtName.ForeColor = Color.White;
-            txtName.Location = new Point(72, 10);
+            txtName.Location = new Point(63, 10);
             txtName.Name = "txtName";
-            txtName.Size = new Size(52, 17);
+            txtName.Size = new Size(107, 47);
             txtName.TabIndex = 3;
             txtName.Text = "_name_";
             // 
@@ -49,10 +48,11 @@
             // 
             pbUser.BackgroundImage = (Image)resources.GetObject("pbUser.BackgroundImage");
             pbUser.BackgroundImageLayout = ImageLayout.Stretch;
-            pbUser.Location = new Point(16, 10);
+            pbUser.Dock = DockStyle.Left;
+            pbUser.Location = new Point(10, 10);
             pbUser.Name = "pbUser";
-            pbUser.Size = new Size(50, 50);
-            pbUser.TabIndex = 2;
+            pbUser.Size = new Size(47, 47);
+            pbUser.TabIndex = 4;
             pbUser.TabStop = false;
             // 
             // UserHub
@@ -60,19 +60,18 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(55, 55, 55);
-            Controls.Add(txtName);
             Controls.Add(pbUser);
+            Controls.Add(txtName);
             Name = "UserHub";
             Padding = new Padding(10);
             Size = new Size(170, 67);
             ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Label txtName;
-        private PictureBox pbUser;
+        private Elements.RoundPictureBox pbUser;
     }
 }

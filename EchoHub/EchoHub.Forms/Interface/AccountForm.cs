@@ -35,14 +35,14 @@ namespace EchoHub.Forms.Interface
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
 
-            setControl(new LoginControl());
+            setControl(new LoginControl(this));
 
 
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            setControl(new LoginControl());
+            setControl(new LoginControl(this));
         }
 
         private void btnRegister_Click(object sender, EventArgs e)

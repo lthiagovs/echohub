@@ -411,6 +411,7 @@ namespace EchoHub.Server.Core
                     {
                         _retriev.Informations.Add(message.Content);
                         _retriev.Informations.Add(message._User.Name);
+                        _retriev.Informations.Add(message._User.Id.ToString());
                     }
 
                 }

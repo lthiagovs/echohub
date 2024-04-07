@@ -2,9 +2,13 @@
 {
     public partial class MessageControl : UserControl
     {
-        public MessageControl()
+
+        public int _userID;
+
+        public MessageControl(int userID)
         {
             InitializeComponent();
+            _userID = userID;
         }
     }
 }

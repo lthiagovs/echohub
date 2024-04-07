@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using EchoHub.Forms.Elements;
 
 namespace EchoHub.Forms.Interface.Controls
 {
@@ -32,7 +33,7 @@ namespace EchoHub.Forms.Interface.Controls
             this.Name = Name;
             this.serverId = serverID;
 
-            if(img!=null)
+            if (img != null)
             {
 
                 this.btnServer.Image = img;
@@ -45,18 +46,6 @@ namespace EchoHub.Forms.Interface.Controls
         private void btnServer_Click(object sender, EventArgs e)
         {
             this._target.setContent(new ServerControl(this._target._logged, this._target, serverId, Name));
-        }
-
-        private void btnServer_MouseEnter(object sender, EventArgs e)
-        {
-            btnServer.BackColor = Color.FromArgb(255, 65, 65, 65);
-            btnServer.BorderStyle = BorderStyle.FixedSingle;
-        }
-
-        private void btnServer_MouseLeave(object sender, EventArgs e)
-        {
-            btnServer.BackColor = Color.FromArgb(0, 45, 45, 45);
-            btnServer.BorderStyle = BorderStyle.None;
         }
     }
 }

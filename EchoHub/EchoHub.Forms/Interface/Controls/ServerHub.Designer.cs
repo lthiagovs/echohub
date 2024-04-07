@@ -29,10 +29,20 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerHub));
-            btnServer = new PictureBox();
             pnBack = new Panel();
+            btnServer = new Elements.RoundPictureBox();
+            pnBack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnServer).BeginInit();
             SuspendLayout();
+            // 
+            // pnBack
+            // 
+            pnBack.Controls.Add(btnServer);
+            pnBack.Dock = DockStyle.Fill;
+            pnBack.Location = new Point(0, 0);
+            pnBack.Name = "pnBack";
+            pnBack.Size = new Size(60, 60);
+            pnBack.TabIndex = 1;
             // 
             // btnServer
             // 
@@ -46,32 +56,22 @@
             btnServer.TabIndex = 0;
             btnServer.TabStop = false;
             btnServer.Click += btnServer_Click;
-            btnServer.MouseEnter += btnServer_MouseEnter;
-            btnServer.MouseLeave += btnServer_MouseLeave;
-            // 
-            // pnBack
-            // 
-            pnBack.Dock = DockStyle.Fill;
-            pnBack.Location = new Point(0, 0);
-            pnBack.Name = "pnBack";
-            pnBack.Size = new Size(60, 60);
-            pnBack.TabIndex = 1;
             // 
             // ServerHub
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 45, 45);
-            Controls.Add(btnServer);
             Controls.Add(pnBack);
             Name = "ServerHub";
             Size = new Size(60, 60);
+            pnBack.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)btnServer).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-        private PictureBox btnServer;
         private Panel pnBack;
+        private Elements.RoundPictureBox btnServer;
     }
 }

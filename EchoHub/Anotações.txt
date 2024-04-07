@@ -1,5 +1,5 @@
 Hoje:
 
-Nome de usuario nas mensagens
+
+User imagem dos usuarios nas mensagens
 Usar Modals: https://www.youtube.com/watch?v=8vavpfU0yKQ
-Alterar imagens
