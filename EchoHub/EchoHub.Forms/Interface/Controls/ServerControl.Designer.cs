@@ -134,7 +134,7 @@
             txtChat.Name = "txtChat";
             txtChat.Size = new Size(482, 22);
             txtChat.TabIndex = 0;
-            txtChat.KeyPress += txtChat_KeyPress;
+            txtChat.KeyDown += txtChat_KeyDown;
             // 
             // panel9
             // 
@@ -168,7 +168,6 @@
             btnGif.Size = new Size(30, 30);
             btnGif.TabIndex = 5;
             btnGif.TabStop = false;
-            btnGif.Click += btnGif_Click;
             // 
             // panel8
             // 

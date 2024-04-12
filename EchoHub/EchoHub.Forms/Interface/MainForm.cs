@@ -84,26 +84,9 @@ namespace EchoHub.Forms.Interface
 
         }
 
-        private void pbLogo_Click(object sender, EventArgs e)
-        {
-
-            setContent(new NewServerControl(this));
-
-        }
-
         private void updateServers_Tick(object sender, EventArgs e)
         {
             //this.updateServersRealTime();
-        }
-
-        private void pbLogo_MouseEnter(object sender, EventArgs e)
-        {
-            this.pnCorner.BackColor = Color.FromArgb(255, 65, 65, 65);
-        }
-
-        private void pbLogo_MouseLeave(object sender, EventArgs e)
-        {
-            this.pnCorner.BackColor = Color.FromArgb(0, 45, 45, 45);
         }
 
         private void btnUser_Click(object sender, EventArgs e)

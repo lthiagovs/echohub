@@ -71,6 +71,15 @@ namespace EchoHub.Forms.Helper
 
         }
 
+        public static bool ValidateMessage(string Content)
+        {
+
+            if (Content.Replace(" ", "").Length > 0)
+                return true;
+
+            return false;
+        }
+
     }
 
 }

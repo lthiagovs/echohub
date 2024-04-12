@@ -112,6 +112,7 @@
             // 
             btnNewServer.Anchor = AnchorStyles.Top;
             btnNewServer.BackColor = Color.CornflowerBlue;
+            btnNewServer.Cursor = Cursors.Hand;
             btnNewServer.FlatAppearance.BorderSize = 0;
             btnNewServer.FlatStyle = FlatStyle.Flat;
             btnNewServer.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);

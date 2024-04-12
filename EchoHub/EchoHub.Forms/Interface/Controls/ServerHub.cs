@@ -8,7 +8,7 @@ namespace EchoHub.Forms.Interface.Controls
         private readonly MainForm _target;
 
         private readonly int serverId;
-        private readonly String Name;
+        private String Name;
 
         //Round Borders
         #region

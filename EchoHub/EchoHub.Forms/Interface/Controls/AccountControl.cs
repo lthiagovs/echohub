@@ -1,19 +1,27 @@
 ﻿using EchoHub.Common;
 using EchoHub.Common.Models;
 using EchoHub.Forms.Core;
+using EchoHub.Forms.Elements;
 using EchoHub.Forms.Interface.Dialogs;
 
 namespace EchoHub.Forms.Interface.Controls
 {
     public partial class AccountControl : UserControl
     {
-        private User _logged;
+        private User _user;
         private byte[]? _image;
+        private readonly MainForm _target;
 
         public AccountControl(User _user, MainForm _target, Image? img)
         {
             InitializeComponent();
-            _logged = _user;
+
+            RoundBorder.Round(btnChangeName, 8);
+            RoundBorder.Round(btnChangePassword, 8);
+            RoundBorder.Round(btnLogout, 8);
+
+            this._target = _target;
+            this._user = _user;
             txtEmail.Text = _user.Email;
             txtName.Text = _user.Name;
             txtPassword.Text = _user.Password;
@@ -26,15 +34,20 @@ namespace EchoHub.Forms.Interface.Controls
 
         }
 
+        private void OpenAccountForm()
+        {
+            Application.Run(new AccountForm());
+        }
+
         private void btnChangeName_Click(object sender, EventArgs e)
         {
-            ChangeDialog _change = new ChangeDialog();
+            ChangeDialog _change = new ChangeDialog(_user.Name);
             if (_change.ShowDialog() == DialogResult.OK)
             {
                 MessagePackage _send = new MessagePackage();
                 _send.Type = MessageType.ChangeName;
                 _send.Informations = new List<string>();
-                _send.Informations.Add(_logged.Id.ToString());
+                _send.Informations.Add(_user.Id.ToString());
                 _send.Informations.Add(_change.txtChange.Text);
 
                 Client.Send(_send);
@@ -43,8 +56,8 @@ namespace EchoHub.Forms.Interface.Controls
                 if (_received.Type == MessageType.Positive)
                 {
                     _advice = new AdviceDialog("Nome alterado com sucesso!");
-                    _logged.Name = _change.txtChange.Text;
-                    txtName.Text = _logged.Name;
+                    _user.Name = _change.txtChange.Text;
+                    txtName.Text = _user.Name;
 
                 }
                 else
@@ -58,13 +71,13 @@ namespace EchoHub.Forms.Interface.Controls
         private void btnChangePassword_Click(object sender, EventArgs e)
         {
 
-            ChangeDialog _change = new ChangeDialog();
+            ChangeDialog _change = new ChangeDialog(_user.Password);
             if (_change.ShowDialog() == DialogResult.OK)
             {
                 MessagePackage _send = new MessagePackage();
                 _send.Type = MessageType.ChangePassword;
                 _send.Informations = new List<string>();
-                _send.Informations.Add(_logged.Id.ToString());
+                _send.Informations.Add(_user.Id.ToString());
                 _send.Informations.Add(_change.txtChange.Text);
 
                 Client.Send(_send);
@@ -73,8 +86,8 @@ namespace EchoHub.Forms.Interface.Controls
                 if (_received.Type == MessageType.Positive)
                 {
                     _advice = new AdviceDialog("Senha alterada com sucesso!");
-                    _logged.Password = _change.txtChange.Text;
-                    txtPassword.Text = _logged.Password;
+                    _user.Password = _change.txtChange.Text;
+                    txtPassword.Text = _user.Password;
 
                 }
                 else
@@ -108,7 +121,7 @@ namespace EchoHub.Forms.Interface.Controls
                     MessagePackage _send = new MessagePackage();
                     _send.Type = MessageType.ChangeUserPhoto;
                     _send.Informations = new List<string>();
-                    _send.Informations.Add(this._logged.Id.ToString());
+                    _send.Informations.Add(this._user.Id.ToString());
                     _send.Informations.Add(Convert.ToBase64String(_image));
 
                     Client.Send(_send);
@@ -128,6 +141,15 @@ namespace EchoHub.Forms.Interface.Controls
                 }
 
             }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            Thread MainFormThread = new Thread(() => OpenAccountForm());
+            MainFormThread.SetApartmentState(ApartmentState.STA);
+            MainFormThread.Start();
+
+            _target.Dispose();
         }
     }
 }

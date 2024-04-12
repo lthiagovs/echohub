@@ -9,10 +9,13 @@ namespace EchoHub.Forms.Interface.Controls
     {
         public readonly int _id;
         private readonly ServerControl _target;
+        private string Name;
+
         public ChannelControl(string Name, int Id, ServerControl _target)
         {
             InitializeComponent();
             this.txtName.Text = Name;
+            this.Name = Name;
             this._id = Id;
             this._target = _target;
         }
@@ -41,7 +44,7 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnChannel_Click(object sender, EventArgs e)
         {
-            ChangeDialog _change = new ChangeDialog();
+            ChangeDialog _change = new ChangeDialog(this.Name);
             if(_change.ShowDialog()==DialogResult.OK)
             {
                 MessagePackage _send = PackageHelper.CreatePackage(MessageType.ChangeChannel);

@@ -1,10 +1,10 @@
 ﻿using EchoHub.Common;
 using EchoHub.Common.Helper;
-using EchoHub.Common.Models;
 using EchoHub.Forms.Core;
 using EchoHub.Forms.Elements;
+using EchoHub.Forms.Helper;
 using EchoHub.Forms.Interface.Dialogs;
-using System.Runtime.InteropServices;
+using System.ComponentModel.DataAnnotations;
 
 namespace EchoHub.Forms.Interface.Controls
 {
@@ -23,8 +23,9 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-
-            if (txtPassword.Text.Equals(txtRepeatPassword.Text))
+            AdviceDialog _advice;
+            if (RegisterValidator.ValidateEmail(txtEmail.Text) && 
+                RegisterValidator.ValidatePassword(txtPassword.Text,txtRepeatPassword.Text))
             {
 
 
@@ -38,16 +39,21 @@ namespace EchoHub.Forms.Interface.Controls
 
                 if (PackageHelper.IsPositive(_receive))
                 {
-                    AdviceDialog _advice = new AdviceDialog("Conta criada com sucesso!");
+                    _advice = new AdviceDialog("Conta criada com sucesso!");
                     _advice.ShowDialog();
                 }
                 else
                 {
-                    AdviceDialog _advice = new AdviceDialog("Erro ao criar conta!");
+                    _advice = new AdviceDialog("Erro ao criar conta!");
                     _advice.ShowDialog();
                 }
 
 
+            }
+            else
+            {
+                _advice = new AdviceDialog("Email ou senha inválidos!");
+                _advice.ShowDialog();
             }
 
         }

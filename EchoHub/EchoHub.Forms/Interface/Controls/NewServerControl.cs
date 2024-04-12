@@ -1,6 +1,7 @@
 ﻿using EchoHub.Common;
 using EchoHub.Common.Helper;
 using EchoHub.Forms.Core;
+using EchoHub.Forms.Elements;
 using EchoHub.Forms.Helper;
 using EchoHub.Forms.Interface.Dialogs;
 
@@ -16,6 +17,9 @@ namespace EchoHub.Forms.Interface.Controls
         {
             InitializeComponent();
             _target = target;
+
+            RoundBorder.Round(btnNewServer, 8);
+
         }
 
         private void btnNewServer_Click(object sender, EventArgs e)

@@ -160,6 +160,7 @@ namespace EchoHub.Forms.Interface.Controls
                 AdviceDialog _advice = new AdviceDialog("Não foi possivel carregas os chats...");
                 _advice.ShowDialog();
             }
+            pullScroll();
 
         }
 
@@ -200,11 +201,11 @@ namespace EchoHub.Forms.Interface.Controls
             this.pnMessages.Controls.Clear();
         }
 
-        private void txtChat_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtChat_KeyDown(object sender, KeyEventArgs e)
         {
-
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            if (e.KeyCode == Keys.Enter && ClientHelper.ValidateMessage(txtChat.Text))
             {
+
                 MessagePackage _send = PackageHelper.CreatePackage(MessageType.CreateMessage);
                 _send.Informations.Add(_selectedChannel._id.ToString());
                 _send.Informations.Add(this._target._user.Id.ToString());
@@ -224,8 +225,13 @@ namespace EchoHub.Forms.Interface.Controls
                     AdviceDialog _advice = new AdviceDialog("Erro interno ao enviar a mensagem...");
                     _advice.ShowDialog();
                 }
+                e.Handled = true;
+                e.SuppressKeyPress = true;
                 pullScroll();
+
             }
+
+
         }
 
         private void btnConfig_Click(object sender, EventArgs e)
@@ -347,7 +353,7 @@ namespace EchoHub.Forms.Interface.Controls
                         Common.Models.Message _message = new Common.Models.Message();
                         _message.Content = _received.Informations[i];
                         _message._User = new User();
-                        _message._User.Name = _received.Informations[i+1];
+                        _message._User.Name = _received.Informations[i + 1];
                         _message.UserID = Convert.ToInt32(_received.Informations[i + 2]);
                         _messages.Add(_message);
                     }
@@ -360,7 +366,7 @@ namespace EchoHub.Forms.Interface.Controls
 
 
         }
-        
+
         private void messagesTimer_Tick(object sender, EventArgs e)
         {
 
@@ -379,5 +385,6 @@ namespace EchoHub.Forms.Interface.Controls
 
 
         }
+
     }
 }

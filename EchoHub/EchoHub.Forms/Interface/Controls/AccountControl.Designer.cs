@@ -31,8 +31,8 @@ namespace EchoHub.Forms.Interface.Controls
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountControl));
-            panel1 = new Panel();
-            panel2 = new Panel();
+            pnTop = new Panel();
+            pnAccount = new Panel();
             pbUser = new RoundPictureBox();
             btnChangePassword = new Button();
             panel6 = new Panel();
@@ -46,10 +46,9 @@ namespace EchoHub.Forms.Interface.Controls
             txtName = new Label();
             btnChangeName = new Button();
             panel5 = new Panel();
-            button4 = new Button();
-            button3 = new Button();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
+            btnLogout = new Button();
+            pnTop.SuspendLayout();
+            pnAccount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbUser).BeginInit();
             panel6.SuspendLayout();
             panel4.SuspendLayout();
@@ -57,31 +56,32 @@ namespace EchoHub.Forms.Interface.Controls
             panel5.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
+            // pnTop
             // 
-            panel1.BackColor = Color.FromArgb(55, 55, 55);
-            panel1.Controls.Add(panel2);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(30, 20);
-            panel1.Name = "panel1";
-            panel1.Padding = new Padding(20);
-            panel1.Size = new Size(804, 200);
-            panel1.TabIndex = 0;
+            pnTop.BackColor = Color.FromArgb(55, 55, 55);
+            pnTop.Controls.Add(pnAccount);
+            pnTop.Dock = DockStyle.Top;
+            pnTop.Location = new Point(30, 20);
+            pnTop.Name = "pnTop";
+            pnTop.Padding = new Padding(20);
+            pnTop.Size = new Size(804, 200);
+            pnTop.TabIndex = 0;
             // 
-            // panel2
+            // pnAccount
             // 
-            panel2.BackColor = Color.FromArgb(50, 50, 50);
-            panel2.Controls.Add(pbUser);
-            panel2.Controls.Add(btnChangePassword);
-            panel2.Controls.Add(panel6);
-            panel2.Controls.Add(panel4);
-            panel2.Controls.Add(panel3);
-            panel2.Controls.Add(btnChangeName);
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(20, 20);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(764, 160);
-            panel2.TabIndex = 1;
+            pnAccount.BackColor = Color.FromArgb(50, 50, 50);
+            pnAccount.Controls.Add(pbUser);
+            pnAccount.Controls.Add(btnChangePassword);
+            pnAccount.Controls.Add(panel6);
+            pnAccount.Controls.Add(panel4);
+            pnAccount.Controls.Add(panel3);
+            pnAccount.Controls.Add(btnChangeName);
+            pnAccount.Dock = DockStyle.Fill;
+            pnAccount.Location = new Point(20, 20);
+            pnAccount.Name = "pnAccount";
+            pnAccount.Padding = new Padding(10);
+            pnAccount.Size = new Size(764, 160);
+            pnAccount.TabIndex = 1;
             // 
             // pbUser
             // 
@@ -89,9 +89,9 @@ namespace EchoHub.Forms.Interface.Controls
             pbUser.BackgroundImageLayout = ImageLayout.Stretch;
             pbUser.Cursor = Cursors.Hand;
             pbUser.Dock = DockStyle.Left;
-            pbUser.Location = new Point(0, 0);
+            pbUser.Location = new Point(10, 10);
             pbUser.Name = "pbUser";
-            pbUser.Size = new Size(160, 160);
+            pbUser.Size = new Size(140, 140);
             pbUser.TabIndex = 13;
             pbUser.TabStop = false;
             pbUser.Click += pbUser_Click;
@@ -105,7 +105,7 @@ namespace EchoHub.Forms.Interface.Controls
             btnChangePassword.FlatStyle = FlatStyle.Flat;
             btnChangePassword.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnChangePassword.ForeColor = Color.White;
-            btnChangePassword.Location = new Point(670, 107);
+            btnChangePassword.Location = new Point(660, 117);
             btnChangePassword.Name = "btnChangePassword";
             btnChangePassword.Size = new Size(84, 32);
             btnChangePassword.TabIndex = 12;
@@ -221,7 +221,7 @@ namespace EchoHub.Forms.Interface.Controls
             btnChangeName.FlatStyle = FlatStyle.Flat;
             btnChangeName.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnChangeName.ForeColor = Color.White;
-            btnChangeName.Location = new Point(670, 56);
+            btnChangeName.Location = new Point(660, 66);
             btnChangeName.Name = "btnChangeName";
             btnChangeName.Size = new Size(84, 32);
             btnChangeName.TabIndex = 7;
@@ -231,8 +231,7 @@ namespace EchoHub.Forms.Interface.Controls
             // 
             // panel5
             // 
-            panel5.Controls.Add(button4);
-            panel5.Controls.Add(button3);
+            panel5.Controls.Add(btnLogout);
             panel5.Dock = DockStyle.Fill;
             panel5.Location = new Point(30, 220);
             panel5.Name = "panel5";
@@ -240,37 +239,22 @@ namespace EchoHub.Forms.Interface.Controls
             panel5.Size = new Size(804, 211);
             panel5.TabIndex = 1;
             // 
-            // button4
+            // btnLogout
             // 
-            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button4.BackColor = Color.Crimson;
-            button4.Cursor = Cursors.Hand;
-            button4.FlatAppearance.BorderSize = 0;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.ForeColor = Color.White;
-            button4.Location = new Point(624, 51);
-            button4.Name = "button4";
-            button4.Size = new Size(160, 32);
-            button4.TabIndex = 14;
-            button4.Text = "Excluir Conta";
-            button4.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button3.BackColor = Color.Crimson;
-            button3.Cursor = Cursors.Hand;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.White;
-            button3.Location = new Point(624, 13);
-            button3.Name = "button3";
-            button3.Size = new Size(160, 32);
-            button3.TabIndex = 13;
-            button3.Text = "Desativar Conta";
-            button3.UseVisualStyleBackColor = false;
+            btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLogout.BackColor = Color.Crimson;
+            btnLogout.Cursor = Cursors.Hand;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogout.ForeColor = Color.White;
+            btnLogout.Location = new Point(624, 13);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(160, 32);
+            btnLogout.TabIndex = 13;
+            btnLogout.Text = "Sair";
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += btnLogout_Click;
             // 
             // AccountControl
             // 
@@ -278,12 +262,12 @@ namespace EchoHub.Forms.Interface.Controls
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(60, 60, 60);
             Controls.Add(panel5);
-            Controls.Add(panel1);
+            Controls.Add(pnTop);
             Name = "AccountControl";
             Padding = new Padding(30, 20, 30, 20);
             Size = new Size(864, 451);
-            panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
+            pnTop.ResumeLayout(false);
+            pnAccount.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbUser).EndInit();
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
@@ -297,9 +281,9 @@ namespace EchoHub.Forms.Interface.Controls
 
         #endregion
 
-        private Panel panel1;
+        private Panel pnTop;
         private Panel panel5;
-        private Panel panel2;
+        private Panel pnAccount;
         private Label txtName;
         private Button btnChangeName;
         private Panel panel6;
@@ -312,7 +296,7 @@ namespace EchoHub.Forms.Interface.Controls
         private Label label4;
         private Button btnChangePassword;
         private Button button4;
-        private Button button3;
+        private Button btnLogout;
         private RoundPictureBox pbUser;
     }
 }

@@ -40,7 +40,6 @@
             pnLeft = new Panel();
             pnServers = new Panel();
             pnCorner = new Panel();
-            label2 = new Label();
             pbLogo = new PictureBox();
             label1 = new Label();
             updateServers = new System.Windows.Forms.Timer(components);
@@ -167,7 +166,6 @@
             // 
             // pnCorner
             // 
-            pnCorner.Controls.Add(label2);
             pnCorner.Controls.Add(pbLogo);
             pnCorner.Controls.Add(label1);
             pnCorner.Dock = DockStyle.Top;
@@ -175,16 +173,6 @@
             pnCorner.Name = "pnCorner";
             pnCorner.Size = new Size(60, 73);
             pnCorner.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.Font = new Font("Segoe UI", 6.25F);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(0, 51);
-            label2.Name = "label2";
-            label2.Size = new Size(60, 12);
-            label2.TabIndex = 2;
-            label2.Text = "Novo Servidor";
             // 
             // pbLogo
             // 
@@ -196,9 +184,6 @@
             pbLogo.Size = new Size(40, 40);
             pbLogo.TabIndex = 0;
             pbLogo.TabStop = false;
-            pbLogo.Click += pbLogo_Click;
-            pbLogo.MouseEnter += pbLogo_MouseEnter;
-            pbLogo.MouseLeave += pbLogo_MouseLeave;
             // 
             // label1
             // 
@@ -247,7 +232,6 @@
         private Label label1;
         private Panel pnCorner;
         private Panel pnServers;
-        private Label label2;
         private System.Windows.Forms.Timer updateServers;
         private PictureBox btnUser;
         private PictureBox btnCreateServer;
