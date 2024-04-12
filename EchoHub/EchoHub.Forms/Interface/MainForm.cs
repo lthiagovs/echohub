@@ -71,7 +71,7 @@ namespace EchoHub.Forms.Interface
                     Client.Send(_send);
                     MessagePackage _receivedImage = Client.Listen();
 
-                    if(_receive.Type==MessageType.Positive)
+                    if (_receivedImage.Type == MessageType.Positive)
                     {
 
                         byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
@@ -111,7 +111,7 @@ namespace EchoHub.Forms.Interface
                     pnServers.Controls.Clear();
                     for (int i = 0; i < _receive.Informations.Count; i += 2)
                     {
-                        addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1],null);
+                        addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1], null);
                     }
                 }
 
@@ -122,6 +122,12 @@ namespace EchoHub.Forms.Interface
         public MainForm(User _user)
         {
             InitializeComponent();
+            //Round
+            this.btnUser.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
+            this.btnCreateServer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
+            this.btnChangelog.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
+            this.btnNotification.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
+
             _logged = _user;
             Image? img = null;
             MessagePackage _send = new MessagePackage();
@@ -140,7 +146,7 @@ namespace EchoHub.Forms.Interface
 
             }
 
-            this.setContent(new AccountControl(_user,this,img));
+            this.setContent(new AccountControl(_user, this, img));
 
             reloadServers();
             updateServers.Start();
@@ -161,12 +167,79 @@ namespace EchoHub.Forms.Interface
 
         private void pbLogo_MouseEnter(object sender, EventArgs e)
         {
-            this.pnCorner.BackColor = Color.FromArgb(255,65,65,65);
+            this.pnCorner.BackColor = Color.FromArgb(255, 65, 65, 65);
         }
 
         private void pbLogo_MouseLeave(object sender, EventArgs e)
         {
-            this.pnCorner.BackColor = Color.FromArgb(0,45,45,45);
+            this.pnCorner.BackColor = Color.FromArgb(0, 45, 45, 45);
+        }
+
+        private void btnUser_Click(object sender, EventArgs e)
+        {
+            Image? img = null;
+            MessagePackage _send = new MessagePackage();
+            _send.Type = MessageType.GetUserPhoto;
+            _send.Informations = new List<string>();
+            _send.Informations.Add(this._logged.Id.ToString());
+
+            Client.Send(_send);
+            MessagePackage _received = Client.Listen();
+
+            if (_received.Type == MessageType.Positive)
+            {
+                byte[] _img = Convert.FromBase64String(_received.Informations[0]);
+                MemoryStream _mStream = new MemoryStream(_img);
+                img = Image.FromStream(_mStream);
+
+            }
+
+            setContent(new AccountControl(this._logged, this, img));
+        }
+
+        private void btnCreateServer_Click(object sender, EventArgs e)
+        {
+            setContent(new NewServerControl(this));
+        }
+
+        private void btnUser_MouseEnter(object sender, EventArgs e)
+        {
+            this.btnUser.BackColor = Color.FromArgb(255, 80, 80, 80);
+        }
+
+        private void btnUser_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnUser.BackColor = Color.FromArgb(0, 45, 45, 45);
+        }
+
+        private void btnCreateServer_MouseEnter(object sender, EventArgs e)
+        {
+            this.btnCreateServer.BackColor = Color.FromArgb(255, 80, 80, 80);
+        }
+
+        private void btnCreateServer_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnCreateServer.BackColor = Color.FromArgb(0, 45, 45, 45);
+        }
+
+        private void btnNotification_MouseEnter(object sender, EventArgs e)
+        {
+            this.btnNotification.BackColor = Color.FromArgb(255, 80, 80, 80);
+        }
+
+        private void btnChangelog_MouseEnter(object sender, EventArgs e)
+        {
+            this.btnChangelog.BackColor = Color.FromArgb(255, 80, 80, 80);
+        }
+
+        private void btnNotification_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnNotification.BackColor = Color.FromArgb(0, 45, 45, 45);
+        }
+
+        private void btnChangelog_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnChangelog.BackColor = Color.FromArgb(0, 45, 45, 45);
         }
     }
 }

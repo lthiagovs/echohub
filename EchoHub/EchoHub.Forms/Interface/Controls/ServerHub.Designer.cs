@@ -63,6 +63,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 45, 45);
             Controls.Add(pnBack);
+            Margin = new Padding(3, 20, 3, 20);
             Name = "ServerHub";
             Size = new Size(60, 60);
             pnBack.ResumeLayout(false);

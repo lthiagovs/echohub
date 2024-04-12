@@ -33,6 +33,10 @@
             pnMain = new Panel();
             pnContent = new Panel();
             pnTop = new Panel();
+            btnNotification = new PictureBox();
+            btnChangelog = new PictureBox();
+            btnCreateServer = new PictureBox();
+            btnUser = new PictureBox();
             pnLeft = new Panel();
             pnServers = new Panel();
             pnCorner = new Panel();
@@ -41,6 +45,11 @@
             label1 = new Label();
             updateServers = new System.Windows.Forms.Timer(components);
             pnMain.SuspendLayout();
+            pnTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)btnNotification).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnChangelog).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnCreateServer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnUser).BeginInit();
             pnLeft.SuspendLayout();
             pnCorner.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
@@ -69,11 +78,71 @@
             // pnTop
             // 
             pnTop.BackColor = Color.FromArgb(45, 45, 45);
+            pnTop.Controls.Add(btnNotification);
+            pnTop.Controls.Add(btnChangelog);
+            pnTop.Controls.Add(btnCreateServer);
+            pnTop.Controls.Add(btnUser);
             pnTop.Dock = DockStyle.Top;
             pnTop.Location = new Point(60, 0);
             pnTop.Name = "pnTop";
             pnTop.Size = new Size(924, 40);
             pnTop.TabIndex = 2;
+            // 
+            // btnNotification
+            // 
+            btnNotification.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnNotification.BackgroundImage = (Image)resources.GetObject("btnNotification.BackgroundImage");
+            btnNotification.BackgroundImageLayout = ImageLayout.Center;
+            btnNotification.Cursor = Cursors.Hand;
+            btnNotification.Location = new Point(855, 3);
+            btnNotification.Name = "btnNotification";
+            btnNotification.Size = new Size(30, 30);
+            btnNotification.TabIndex = 8;
+            btnNotification.TabStop = false;
+            btnNotification.MouseEnter += btnNotification_MouseEnter;
+            btnNotification.MouseLeave += btnNotification_MouseLeave;
+            // 
+            // btnChangelog
+            // 
+            btnChangelog.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnChangelog.BackgroundImage = (Image)resources.GetObject("btnChangelog.BackgroundImage");
+            btnChangelog.BackgroundImageLayout = ImageLayout.Center;
+            btnChangelog.Cursor = Cursors.Hand;
+            btnChangelog.Location = new Point(891, 3);
+            btnChangelog.Name = "btnChangelog";
+            btnChangelog.Size = new Size(30, 30);
+            btnChangelog.TabIndex = 7;
+            btnChangelog.TabStop = false;
+            btnChangelog.MouseEnter += btnChangelog_MouseEnter;
+            btnChangelog.MouseLeave += btnChangelog_MouseLeave;
+            // 
+            // btnCreateServer
+            // 
+            btnCreateServer.BackgroundImage = (Image)resources.GetObject("btnCreateServer.BackgroundImage");
+            btnCreateServer.BackgroundImageLayout = ImageLayout.Center;
+            btnCreateServer.Cursor = Cursors.Hand;
+            btnCreateServer.Location = new Point(42, 4);
+            btnCreateServer.Name = "btnCreateServer";
+            btnCreateServer.Size = new Size(30, 30);
+            btnCreateServer.TabIndex = 6;
+            btnCreateServer.TabStop = false;
+            btnCreateServer.Click += btnCreateServer_Click;
+            btnCreateServer.MouseEnter += btnCreateServer_MouseEnter;
+            btnCreateServer.MouseLeave += btnCreateServer_MouseLeave;
+            // 
+            // btnUser
+            // 
+            btnUser.BackgroundImage = (Image)resources.GetObject("btnUser.BackgroundImage");
+            btnUser.BackgroundImageLayout = ImageLayout.Center;
+            btnUser.Cursor = Cursors.Hand;
+            btnUser.Location = new Point(6, 4);
+            btnUser.Name = "btnUser";
+            btnUser.Size = new Size(30, 30);
+            btnUser.TabIndex = 5;
+            btnUser.TabStop = false;
+            btnUser.Click += btnUser_Click;
+            btnUser.MouseEnter += btnUser_MouseEnter;
+            btnUser.MouseLeave += btnUser_MouseLeave;
             // 
             // pnLeft
             // 
@@ -157,6 +226,11 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
             pnMain.ResumeLayout(false);
+            pnTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)btnNotification).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnChangelog).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnCreateServer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnUser).EndInit();
             pnLeft.ResumeLayout(false);
             pnCorner.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
@@ -175,5 +249,9 @@
         private Panel pnServers;
         private Label label2;
         private System.Windows.Forms.Timer updateServers;
+        private PictureBox btnUser;
+        private PictureBox btnCreateServer;
+        private PictureBox btnChangelog;
+        private PictureBox btnNotification;
     }
 }
