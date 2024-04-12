@@ -1,4 +1,5 @@
 ﻿using EchoHub.Common;
+using EchoHub.Common.Helper;
 using EchoHub.Forms.Core;
 using EchoHub.Forms.Interface.Dialogs;
 
@@ -6,13 +7,13 @@ namespace EchoHub.Forms.Interface.Controls
 {
     public partial class ChannelControl : UserControl
     {
-        public int _id;
-        private ServerControl _target;
-        public ChannelControl(string Name, int _id, ServerControl _target)
+        public readonly int _id;
+        private readonly ServerControl _target;
+        public ChannelControl(string Name, int Id, ServerControl _target)
         {
             InitializeComponent();
             this.txtName.Text = Name;
-            this._id = _id;
+            this._id = Id;
             this._target = _target;
         }
 
@@ -43,16 +44,14 @@ namespace EchoHub.Forms.Interface.Controls
             ChangeDialog _change = new ChangeDialog();
             if(_change.ShowDialog()==DialogResult.OK)
             {
-                MessagePackage _send = new MessagePackage();
-                _send.Type = MessageType.ChangeChannel;
-                _send.Informations = new List<string>();
+                MessagePackage _send = PackageHelper.CreatePackage(MessageType.ChangeChannel);
                 _send.Informations.Add(this._id.ToString());
                 _send.Informations.Add(_change.txtChange.Text);
 
                 Client.Send(_send);
                 MessagePackage _received = Client.Listen();
 
-                if(_received.Type==MessageType.Positive)
+                if(PackageHelper.IsPositive(_received))
                 {
                     this.txtName.Text = _change.txtChange.Text;
                 }

@@ -3,12 +3,21 @@
     public partial class MessageControl : UserControl
     {
 
-        public int _userID;
+        public readonly int _userID;
 
-        public MessageControl(int userID)
+        public MessageControl(int userID, string Name, string Content, Image? img)
         {
             InitializeComponent();
             _userID = userID;
+            this.txtContent.Text = Content;
+            this.txtName.Text = Name;
+
+            if(img!=null)
+            {
+                this.pbUser.Image = img;
+                this.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+
         }
     }
 }

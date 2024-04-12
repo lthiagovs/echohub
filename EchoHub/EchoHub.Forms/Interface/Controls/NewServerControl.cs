@@ -1,8 +1,8 @@
 ﻿using EchoHub.Common;
+using EchoHub.Common.Helper;
 using EchoHub.Forms.Core;
+using EchoHub.Forms.Helper;
 using EchoHub.Forms.Interface.Dialogs;
-using System.IO;
-using System.Text;
 
 namespace EchoHub.Forms.Interface.Controls
 {
@@ -21,49 +21,38 @@ namespace EchoHub.Forms.Interface.Controls
         private void btnNewServer_Click(object sender, EventArgs e)
         {
 
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.CreateServer;
-            _send.Informations = new List<string>();
+            MessagePackage _send = PackageHelper.CreatePackage(MessageType.CreateServer);
             _send.Informations.Add(txtServerName.Text);
-            _send.Informations.Add(_target._logged.Email);
-            _send.Informations.Add(_target._logged.Password);
+            _send.Informations.Add(_target._user.Email);
+            _send.Informations.Add(_target._user.Password);
 
             Client.Send(_send);
             MessagePackage _receive = Client.Listen();
 
             //Server Created
-            if (_receive.Type == MessageType.Positive)
+            if (PackageHelper.IsPositive(_receive))
             {
                 int serverID = Convert.ToInt32(_receive.Informations[0]);
-                Image? img = null;
-                if(_image!=null)
-                {
-                    MemoryStream _mStream = new MemoryStream(_image);
-                    img = Image.FromStream(_mStream);
-                }
+                Image? serverImage = ClientHelper.ByteToImage(_image);
 
-                this._target.addServer(serverID, txtServerName.Text, img);
+                this._target.addServer(serverID, txtServerName.Text, serverImage);
 
                 this.txtServerName.Text = "";
-                _send = new MessagePackage();
-                _send.Type = MessageType.CreateChat;
-                _send.Informations = new List<string>();
+                _send = PackageHelper.CreatePackage(MessageType.CreateChat);
                 _send.Informations.Add(_receive.Informations[0]);
                 _send.Informations.Add("Novo chat");
                 Client.Send(_send);
                 _receive = Client.Listen();
 
                 //First Chat Created
-                if (_receive.Type == MessageType.Positive)
+                if (PackageHelper.IsPositive(_receive))
                 {
                    
                     //Send Photo
                     if(_image!=null)
                     {
 
-                        _send = new MessagePackage();
-                        _send.Informations = new List<string>();
-                        _send.Type = MessageType.ChangeServerPhoto;
+                        _send = PackageHelper.CreatePackage(MessageType.ChangeServerPhoto);
                         _send.Informations.Add(serverID.ToString());
                         _send.Informations.Add(Convert.ToBase64String(_image));
 
@@ -71,7 +60,7 @@ namespace EchoHub.Forms.Interface.Controls
                         _receive = Client.Listen();
 
                         //Photo received
-                        if (_receive.Type != MessageType.Positive)
+                        if (!PackageHelper.IsPositive(_receive))
                         {
                             AdviceDialog _advice = new AdviceDialog("Erro ao enviar foto.");
                             _advice.ShowDialog();

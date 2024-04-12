@@ -1,37 +1,56 @@
 ﻿using EchoHub.Common;
+using EchoHub.Common.Helper;
 using EchoHub.Common.Models;
 using EchoHub.Forms.Core;
+using EchoHub.Forms.Elements;
+using EchoHub.Forms.Helper;
 using EchoHub.Forms.Interface.Dialogs;
-using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
 
 namespace EchoHub.Forms.Interface.Controls
 {
     public partial class ServerControl : UserControl
     {
 
-        private int _round = 8;
-        private User _user;
-        private MainForm _target;
+        private readonly User _user;
+        private readonly MainForm _target;
         public ChannelControl _selectedChannel;
-        private int _id;
+        private readonly int _id;
         private Image? _userImg;
 
         private bool titleTimerTrigger = false;
 
-        //Round Borders
-        #region
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
-        (
-            int nLeftRect,     // x-coordinate of upper-left corner
-            int nTopRect,      // y-coordinate of upper-left corner
-            int nRightRect,    // x-coordinate of lower-right corner
-            int nBottomRect,   // y-coordinate of lower-right corner
-            int nWidthEllipse, // width of ellipse
-            int nHeightEllipse // height of ellipse
-        );
-        #endregion
+        public ServerControl(User _user, MainForm _target, int _id, string Name)
+        {
+
+
+
+            InitializeComponent();
+            this._user = _user;
+            this.btnServer.Text = Name;
+            this._target = _target;
+            this.txtUserName.Text = _user.Name;
+            this._id = _id;
+            this.reloadChannels();
+            this.reloadUser();
+            this.setChannel(pnChannel.Controls[0] as ChannelControl);
+            this.reloadMessages(_selectedChannel._id);
+
+            RoundBorder.Round(btnConfig, 8);
+            RoundBorder.Round(btnMic, 8);
+            RoundBorder.Round(btnPhone, 8);
+
+            _userImg = ClientHelper.AskUserImage(_user.Id);
+
+            if (_userImg != null)
+            {
+                this.pbUser.Image = _userImg;
+                this.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+
+            messagesTimer.Start();
+
+
+        }
 
         private void addUser(int Id, string Name)
         {
@@ -44,16 +63,14 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void reloadUser()
         {
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetFriends;
-            _send.Informations = new List<string>();
+            MessagePackage _send = PackageHelper.CreatePackage(MessageType.GetFriends);
             _send.Informations.Add(_id.ToString());
 
             Client.Send(_send);
 
             MessagePackage _received = Client.Listen();
 
-            if (_received.Type == MessageType.Positive)
+            if (PackageHelper.IsPositive(_received))
             {
 
                 for (int i = 0; i < _received.Informations.Count; i += 2)
@@ -76,18 +93,10 @@ namespace EchoHub.Forms.Interface.Controls
 
         }
 
-        private void addMessage(string User, string Content, Image? img, int UserID)
+        private void addMessage(string Name, string Content, Image? img, int UserID)
         {
             upScroll();
-            MessageControl _messageControl = new MessageControl(UserID);
-            if (img != null)
-            {
-                _messageControl.pbUser.Image = img;
-                _messageControl.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            }
-            _messageControl.txtContent.Text = Content;
-            _messageControl.txtName.Text = User;
+            MessageControl _messageControl = new MessageControl(UserID, Name, Content, img);
             _messageControl.Location = new Point(0, pnMessages.Controls.Count * _messageControl.Height);
             pnMessages.Controls.Add(_messageControl);
 
@@ -131,15 +140,13 @@ namespace EchoHub.Forms.Interface.Controls
         private void reloadChannels()
         {
 
-            MessagePackage _send = new MessagePackage();
-            _send.Informations = new List<string>();
+            MessagePackage _send = PackageHelper.CreatePackage(MessageType.GetChats);
             _send.Informations.Add(_id.ToString());
-            _send.Type = MessageType.GetChats;
             Client.Send(_send);
 
             MessagePackage _receive = Client.Listen();
 
-            if (_receive.Type == MessageType.Positive)
+            if (PackageHelper.IsPositive(_receive))
             {
 
                 for (int i = 0; i < _receive.Informations.Count(); i += 2)
@@ -160,39 +167,21 @@ namespace EchoHub.Forms.Interface.Controls
         {
 
             clearMessages();
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetMessages;
-            _send.Informations = new List<string>();
+            MessagePackage _send = PackageHelper.CreatePackage(MessageType.GetMessages);
             _send.Informations.Add(chatId.ToString());
 
             Client.Send(_send);
 
             MessagePackage _receive = Client.Listen();
 
-            if (_receive.Type == MessageType.Positive)
+            if (PackageHelper.IsPositive(_receive))
             {
 
                 for (int i = 0; i < _receive.Informations.Count(); i += 3)
                 {
-                    int _messageUserID = Convert.ToInt32(_receive.Informations[i + 2]);
-                    Image? img = null;
-                    _send = new MessagePackage();
-                    _send.Type = MessageType.GetUserPhoto;
-                    _send.Informations = new List<string>();
-                    _send.Informations.Add(_messageUserID.ToString());
-
-                    Client.Send(_send);
-                    MessagePackage _receivedImage = Client.Listen();
-
-                    if (_receivedImage.Type == MessageType.Positive)
-                    {
-                        byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
-                        MemoryStream _mStream = new MemoryStream(_img);
-                        img = Image.FromStream(_mStream);
-
-                    }
-
-                    addMessage(_receive.Informations[i + 1], _receive.Informations[i], img, _messageUserID);
+                    int _messageUserId = Convert.ToInt32(_receive.Informations[i + 2]);
+                    Image? userImage = ClientHelper.AskUserImage(_messageUserId);
+                    addMessage(_receive.Informations[i + 1], _receive.Informations[i], userImage, _messageUserId);
 
                 }
 
@@ -211,73 +200,23 @@ namespace EchoHub.Forms.Interface.Controls
             this.pnMessages.Controls.Clear();
         }
 
-        public ServerControl(User _user, MainForm _target, int _id, string Name)
-        {
-
-
-
-            InitializeComponent();
-            this._user = _user;
-            this.btnServer.Text = Name;
-            this._target = _target;
-            this.txtUserName.Text = _user.Name;
-            this._id = _id;
-            this.reloadChannels();
-            this.reloadUser();
-            this.setChannel(pnChannel.Controls[0] as ChannelControl);
-            this.reloadMessages(_selectedChannel._id);
-
-            this.btnConfig.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnConfig.Width, btnConfig.Height, _round, _round));
-            this.btnMic.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnMic.Width, btnMic.Height, _round, _round));
-            this.btnPhone.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnPhone.Width, btnPhone.Height, _round, _round));
-
-            _userImg = null;
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetUserPhoto;
-            _send.Informations = new List<string>();
-            _send.Informations.Add(_user.Id.ToString());
-
-            Client.Send(_send);
-            MessagePackage _receivedImage = Client.Listen();
-
-            if (_receivedImage.Type == MessageType.Positive)
-            {
-                byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
-                MemoryStream _mStream = new MemoryStream(_img);
-                _userImg = Image.FromStream(_mStream);
-                this.pbUser.Image = _userImg;
-                this.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            }
-
-            messagesTimer.Start();
-
-            //test
-
-
-
-
-        }
-
         private void txtChat_KeyPress(object sender, KeyPressEventArgs e)
         {
 
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                MessagePackage _send = new MessagePackage();
-                _send.Informations = new List<string>();
+                MessagePackage _send = PackageHelper.CreatePackage(MessageType.CreateMessage);
                 _send.Informations.Add(_selectedChannel._id.ToString());
-                _send.Informations.Add(this._target._logged.Id.ToString());
+                _send.Informations.Add(this._target._user.Id.ToString());
                 _send.Informations.Add(txtChat.Text);
-                _send.Type = MessageType.CreateMessage;
 
                 Client.Send(_send);
 
                 MessagePackage _received = Client.Listen();
 
-                if (_received.Type == MessageType.Positive)
+                if (PackageHelper.IsPositive(_received))
                 {
-                    addMessage(this._user.Name, txtChat.Text, _userImg, _target._logged.Id);
+                    addMessage(this._user.Name, txtChat.Text, _userImg, _target._user.Id);
                     txtChat.Text = "";
                 }
                 else
@@ -291,44 +230,19 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnConfig_Click(object sender, EventArgs e)
         {
-            Image? img = null;
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetUserPhoto;
-            _send.Informations = new List<string>();
-            _send.Informations.Add(this._user.Id.ToString());
-
-            Client.Send(_send);
-            MessagePackage _received = Client.Listen();
-
-            if (_received.Type == MessageType.Positive)
-            {
-                byte[] _img = Convert.FromBase64String(_received.Informations[0]);
-                MemoryStream _mStream = new MemoryStream(_img);
-                img = Image.FromStream(_mStream);
-
-            }
-
-            this._target.setContent(new AccountControl(this._user, this._target, img));
-        }
-
-        private void btnGif_Click(object sender, EventArgs e)
-        {
-            reloadMessages(_selectedChannel._id);
+            Image? userImage = ClientHelper.AskUserImage(this._user.Id);
+            this._target.setContent(new AccountControl(this._user, this._target, userImage));
         }
 
         private void btnCreateChat_Click(object sender, EventArgs e)
         {
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.CreateChat;
-            _send.Informations = new List<string>();
+            MessagePackage _send = PackageHelper.CreatePackage(MessageType.CreateChat);
             _send.Informations.Add(_id.ToString());
             _send.Informations.Add("Novo chat");
-
             Client.Send(_send);
 
             MessagePackage _received = Client.Listen();
-
-            if (_received.Type == MessageType.Positive)
+            if (PackageHelper.IsPositive(_received))
             {
                 addChannel("Novo chat", Convert.ToInt32(_received.Informations[0]));
             }
@@ -374,27 +288,22 @@ namespace EchoHub.Forms.Interface.Controls
             InviteDialog _invite = new InviteDialog();
             if (_invite.ShowDialog() == DialogResult.OK)
             {
-                MessagePackage _send = new MessagePackage();
-                _send.Type = MessageType.GetFriend;
-                _send.Informations = new List<string>();
+                MessagePackage _send = PackageHelper.CreatePackage(MessageType.GetFriend);
                 _send.Informations.Add(_invite.txtEmail.Text);
-
                 Client.Send(_send);
-                MessagePackage _received = Client.Listen();
 
-                if (_received.Type == MessageType.Positive)
+                MessagePackage _received = Client.Listen();
+                if (PackageHelper.IsPositive(_received))
                 {
                     int FriendID = Convert.ToInt32(_received.Informations[0]);
                     string FriendName = _received.Informations[1];
-                    _send = new MessagePackage();
-                    _send.Type = MessageType.BoundUser;
-                    _send.Informations = new List<string>();
+                    _send = PackageHelper.CreatePackage(MessageType.BoundUser);
                     _send.Informations.Add(FriendID.ToString());
                     _send.Informations.Add(this._id.ToString());
-
                     Client.Send(_send);
+
                     _received = Client.Listen();
-                    if (_received.Type == MessageType.Positive)
+                    if (PackageHelper.IsPositive(_received))
                     {
                         addUser(FriendID, FriendName);
                     }
@@ -416,20 +325,18 @@ namespace EchoHub.Forms.Interface.Controls
 
         }
 
-
         //Update Messages in Async
         private List<Common.Models.Message> updateMessagesAsync()
         {
             List<Common.Models.Message> _messages = new List<Common.Models.Message>();
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetMessages;
-            _send.Informations = new List<string>();
+            MessagePackage _send = PackageHelper.CreatePackage(MessageType.GetMessages);
             _send.Informations.Add(_selectedChannel._id.ToString());
             Client.Send(_send);
+
             MessagePackage _received = Client.Listen();
             int messageNumber = pnMessages.Controls.Count;
 
-            if (_received.Type == MessageType.Positive)
+            if (PackageHelper.IsPositive(_received))
             {
 
                 for (int i = 0; i < _received.Informations.Count(); i += 3)
@@ -453,6 +360,7 @@ namespace EchoHub.Forms.Interface.Controls
 
 
         }
+        
         private void messagesTimer_Tick(object sender, EventArgs e)
         {
 
@@ -463,23 +371,7 @@ namespace EchoHub.Forms.Interface.Controls
             {
 
                 int _messageUserID = message.UserID;
-                Image? img = null;
-                MessagePackage _send = new MessagePackage();
-                _send.Type = MessageType.GetUserPhoto;
-                _send.Informations = new List<string>();
-                _send.Informations.Add(_messageUserID.ToString());
-
-                Client.Send(_send);
-                MessagePackage _receivedImage = Client.Listen();
-
-                if (_receivedImage.Type == MessageType.Positive)
-                {
-                    byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
-                    MemoryStream _mStream = new MemoryStream(_img);
-                    img = Image.FromStream(_mStream);
-
-                }
-
+                Image? img = ClientHelper.AskUserImage(_messageUserID);
                 addMessage(message._User.Name, message.Content, img, message.UserID);
                 pullScroll();
 

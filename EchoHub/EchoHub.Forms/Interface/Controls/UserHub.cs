@@ -1,13 +1,12 @@
-﻿using EchoHub.Common;
-using EchoHub.Forms.Core;
+﻿using EchoHub.Forms.Helper;
 
 namespace EchoHub.Forms.Interface.Controls
 {
     public partial class UserHub : UserControl
     {
 
-        public int _id;
-        public string _name;
+        public readonly int _id;
+        public readonly string _name;
 
         public UserHub(int id, string name)
         {
@@ -16,26 +15,11 @@ namespace EchoHub.Forms.Interface.Controls
             _name = name;
             this.txtName.Text = name;
 
-            Image? img = null;
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetUserPhoto;
-            _send.Informations = new List<string>();
-            _send.Informations.Add(_id.ToString());
+            Image? userImage = ClientHelper.AskUserImage(_id);
 
-            Client.Send(_send);
-            MessagePackage _received = Client.Listen();
-
-            if (_received.Type == MessageType.Positive)
+            if(userImage!=null)
             {
-                byte[] _img = Convert.FromBase64String(_received.Informations[0]);
-                MemoryStream _mStream = new MemoryStream(_img);
-                img = Image.FromStream(_mStream);
-
-            }
-
-            if(img!=null)
-            {
-                this.pbUser.Image = img;
+                this.pbUser.Image = userImage;
                 this.pbUser.SizeMode = PictureBoxSizeMode.StretchImage;
             }
 

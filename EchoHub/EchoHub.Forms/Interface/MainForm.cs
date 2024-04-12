@@ -1,31 +1,36 @@
 ﻿using EchoHub.Common;
+using EchoHub.Common.Helper;
 using EchoHub.Common.Models;
 using EchoHub.Forms.Core;
+using EchoHub.Forms.Elements;
+using EchoHub.Forms.Helper;
 using EchoHub.Forms.Interface.Controls;
 using EchoHub.Forms.Interface.Dialogs;
-using System.Runtime.InteropServices;
 
 namespace EchoHub.Forms.Interface
 {
     public partial class MainForm : Form
     {
 
-        private int _round = 8;
-        //Round Borders
-        #region
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
-        (
-            int nLeftRect,     // x-coordinate of upper-left corner
-            int nTopRect,      // y-coordinate of upper-left corner
-            int nRightRect,    // x-coordinate of lower-right corner
-            int nBottomRect,   // y-coordinate of lower-right corner
-            int nWidthEllipse, // width of ellipse
-            int nHeightEllipse // height of ellipse
-        );
-        #endregion
+        public readonly User _user;
 
-        public User _logged;
+        public MainForm(User _user)
+        {
+            InitializeComponent();
+            RoundBorder.Round(btnUser, 8);
+            RoundBorder.Round(btnCreateServer, 8);
+            RoundBorder.Round(btnChangelog, 8);
+            RoundBorder.Round(btnNotification, 8);
+
+            this._user = _user;
+            Image? userImage = ClientHelper.AskUserImage(this._user.Id);
+
+            this.setContent(new AccountControl(_user, this, userImage));
+
+            reloadServers();
+            updateServers.Start();
+
+        }
 
         public void addServer(int ServerId, string Name, Image? img)
         {
@@ -43,44 +48,31 @@ namespace EchoHub.Forms.Interface
             this.pnContent.Controls.Add(control);
         }
 
-        private void reloadServers()
+        private void clearContent()
         {
             pnServers.Controls.Clear();
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetServers;
-            _send.Informations = new List<string>();
-            _send.Informations.Add(_logged.Id.ToString());
+        }
+
+        private void reloadServers()
+        {
+            clearContent();
+
+            MessagePackage _send = PackageHelper.CreatePackage(MessageType.GetServers);
+            _send.Informations.Add(this._user.Id.ToString());
 
             Client.Send(_send);
 
             MessagePackage _receive = Client.Listen();
 
-            if (_receive.Type == MessageType.Positive)
+            if (PackageHelper.IsPositive(_receive))
             {
 
                 for (int i = 0; i < _receive.Informations.Count; i += 2)
                 {
                     int serverID = Convert.ToInt32(_receive.Informations[i]);
-                    Image? img = null;
+                    Image? serverImage = ClientHelper.AskServerImage(serverID);
 
-                    //Ask for image
-                    _send = new MessagePackage();
-                    _send.Type = MessageType.GetServerPhoto;
-                    _send.Informations = new List<string>();
-                    _send.Informations.Add(serverID.ToString());
-                    Client.Send(_send);
-                    MessagePackage _receivedImage = Client.Listen();
-
-                    if (_receivedImage.Type == MessageType.Positive)
-                    {
-
-                        byte[] _img = Convert.FromBase64String(_receivedImage.Informations[0]);
-                        MemoryStream _mStream = new MemoryStream(_img);
-                        img = Image.FromStream(_mStream);
-
-                    }
-
-                    addServer(serverID, _receive.Informations[i + 1], img);
+                    addServer(serverID, _receive.Informations[i + 1], serverImage);
                 }
 
             }
@@ -89,67 +81,6 @@ namespace EchoHub.Forms.Interface
                 AdviceDialog _advice = new AdviceDialog("Erro ao carregar os servidores!");
                 _advice.ShowDialog();
             }
-
-        }
-
-        private void updateServersRealTime()
-        {
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetServers;
-            _send.Informations = new List<string>();
-            _send.Informations.Add(_logged.Id.ToString());
-
-            Client.Send(_send);
-
-            MessagePackage _receive = Client.Listen();
-
-            if (_receive.Type == MessageType.Positive)
-            {
-
-                if (pnServers.Controls.Count != _receive.Informations.Count / 2)
-                {
-                    pnServers.Controls.Clear();
-                    for (int i = 0; i < _receive.Informations.Count; i += 2)
-                    {
-                        addServer(Convert.ToInt32(_receive.Informations[i]), _receive.Informations[i + 1], null);
-                    }
-                }
-
-            }
-
-        }
-
-        public MainForm(User _user)
-        {
-            InitializeComponent();
-            //Round
-            this.btnUser.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
-            this.btnCreateServer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
-            this.btnChangelog.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
-            this.btnNotification.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUser.Width, btnUser.Height, _round, _round));
-
-            _logged = _user;
-            Image? img = null;
-            MessagePackage _send = new MessagePackage();
-            _send.Type = MessageType.GetUserPhoto;
-            _send.Informations = new List<string>();
-            _send.Informations.Add(this._logged.Id.ToString());
-
-            Client.Send(_send);
-            MessagePackage _received = Client.Listen();
-
-            if (_received.Type == MessageType.Positive)
-            {
-                byte[] _img = Convert.FromBase64String(_received.Informations[0]);
-                MemoryStream _mStream = new MemoryStream(_img);
-                img = Image.FromStream(_mStream);
-
-            }
-
-            this.setContent(new AccountControl(_user, this, img));
-
-            reloadServers();
-            updateServers.Start();
 
         }
 
@@ -181,7 +112,7 @@ namespace EchoHub.Forms.Interface
             MessagePackage _send = new MessagePackage();
             _send.Type = MessageType.GetUserPhoto;
             _send.Informations = new List<string>();
-            _send.Informations.Add(this._logged.Id.ToString());
+            _send.Informations.Add(this._user.Id.ToString());
 
             Client.Send(_send);
             MessagePackage _received = Client.Listen();
@@ -194,7 +125,7 @@ namespace EchoHub.Forms.Interface
 
             }
 
-            setContent(new AccountControl(this._logged, this, img));
+            setContent(new AccountControl(this._user, this, img));
         }
 
         private void btnCreateServer_Click(object sender, EventArgs e)

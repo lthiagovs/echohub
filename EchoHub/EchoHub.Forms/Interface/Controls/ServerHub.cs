@@ -1,16 +1,14 @@
 ﻿using System.Runtime.InteropServices;
-using EchoHub.Forms.Elements;
 
 namespace EchoHub.Forms.Interface.Controls
 {
     public partial class ServerHub : UserControl
     {
 
-        private int _round = 14;
-        private MainForm _target;
+        private readonly MainForm _target;
 
-        private int serverId;
-        private String Name;
+        private readonly int serverId;
+        private readonly String Name;
 
         //Round Borders
         #region
@@ -45,7 +43,7 @@ namespace EchoHub.Forms.Interface.Controls
 
         private void btnServer_Click(object sender, EventArgs e)
         {
-            this._target.setContent(new ServerControl(this._target._logged, this._target, serverId, Name));
+            this._target.setContent(new ServerControl(this._target._user, this._target, serverId, Name));
         }
     }
 }
