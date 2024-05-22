@@ -1,1 +1,2 @@
-# echohub
+# EchoHub
+A discord clone
